@@ -1,0 +1,31 @@
+{
+  "name": "high-low-dice-client",
+  "version": "1.0.0",
+  "description": "Server part of High-Low-Dice FE client",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server/app.js",
+    "server": "nodemon server/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ikohyppa/high-low-dice-client.git"
+  },
+  "keywords": [
+    "Node.js",
+    "Express"
+  ],
+  "author": "Iko",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ikohyppa/high-low-dice-client/issues"
+  },
+  "homepage": "https://github.com/ikohyppa/high-low-dice-client#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
