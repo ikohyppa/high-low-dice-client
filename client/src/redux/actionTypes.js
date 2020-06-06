@@ -5,3 +5,6 @@ export const CREATE_ROOM_ERROR = 'CREATE_ROOM_ERROR';
 export const JOIN_ROOM_REQUEST = 'JOIN_ROOM_REQUEST';
 export const JOIN_ROOM_SUCCESS = 'JOIN_ROOM_SUCCESS';
 export const JOIN_ROOM_ERROR = 'JOIN_ROOM_ERROR';
+
+// Players state
+export const ADD_PLAYER = 'ADD_PLAYER';

@@ -7,7 +7,8 @@ import {
   CREATE_ROOM_ERROR,
   JOIN_ROOM_REQUEST,
   JOIN_ROOM_SUCCESS,
-  JOIN_ROOM_ERROR
+  JOIN_ROOM_ERROR,
+  ADD_PLAYER
 } from './actionTypes';
 
 export function createRoomRequest() {
@@ -34,8 +35,14 @@ export function createRoom(roomName, username) {
   return async function (dispatch) {
     dispatch(createRoomRequest());
     try {
-      const response = await axios.get(`${API_BASE}/room?name=${roomName}&user=${username}`);
+      const response = await axios.get(
+        `${API_BASE}/room?name=${roomName}&user=${username}`
+      );
+      const playerlist = response.data.playerlist;
       dispatch(createRoomSuccess(response.data));
+      playerlist.forEach(player => {
+        dispatch(addPlayer(player));
+      });
     } catch (error) {
       dispatch(createRoomError(error));
     }
@@ -66,10 +73,26 @@ export function joinRoom(roomId, username) {
   return async function (dispatch) {
     dispatch(joinRoomRequest());
     try {
-      const response = await axios.get(`${API_BASE}/room/${roomId}?user=${username}`);
+      const response = await axios.get(
+        `${API_BASE}/room/${roomId}?user=${username}`
+      );
+      const playerlist = response.data.playerlist;
       dispatch(joinRoomSuccess(response.data));
+      playerlist.forEach(player => {
+        dispatch(addPlayer(player));
+      });
     } catch (error) {
       dispatch(joinRoomError(error));
     }
   };
 }
+
+let nextPlayerId = 0;
+
+export const addPlayer = name => ({
+  type: ADD_PLAYER,
+  payload: {
+    id: ++nextPlayerId, //player IDs will start from 1
+    name
+  }
+});
