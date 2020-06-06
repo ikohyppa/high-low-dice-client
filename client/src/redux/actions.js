@@ -30,11 +30,11 @@ export function createRoomError(error) {
   };
 }
 
-export function createRoom(roomName) {
+export function createRoom(roomName, username) {
   return async function (dispatch) {
     dispatch(createRoomRequest());
     try {
-      const response = await axios.get(`${API_BASE}/room?name=${roomName}`);
+      const response = await axios.get(`${API_BASE}/room?name=${roomName}&user=${username}`);
       dispatch(createRoomSuccess(response.data));
     } catch (error) {
       dispatch(createRoomError(error));
@@ -66,7 +66,7 @@ export function joinRoom(roomId, username) {
   return async function (dispatch) {
     dispatch(joinRoomRequest());
     try {
-      const response = await axios.get(`${API_BASE}/room/${roomId}`);
+      const response = await axios.get(`${API_BASE}/room/${roomId}?user=${username}`);
       dispatch(joinRoomSuccess(response.data));
     } catch (error) {
       dispatch(joinRoomError(error));
