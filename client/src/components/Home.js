@@ -7,7 +7,7 @@ export default function HomeComponent() {
   const [username, setUserName] = useState('');
   const [roomName, setRoomName] = useState('');
   const [roomId, setRoomId] = useState('');
-  const currentRoom = useSelector(state => state.gameRoom.roomName);
+  const currentRoom = useSelector(state => state.roomName);
 
   const dispatch = useDispatch();
   const ws = useContext(WebSocketContext);

@@ -102,7 +102,7 @@ export const addNewPlayer = (roomId, user) => ({
   type: ADD_NEW_PLAYER,
   payload: {
     roomId: roomId,
-    id: ++nextPlayerId, //player IDs will start from 1
+    id: ++nextPlayerId,
     name: user
   }
 });
