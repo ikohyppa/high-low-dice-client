@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { createRoom, joinRoom } from '../redux/actions';
+import { WebSocketContext } from '../connection/webSocket';
 
 export default function HomeComponent() {
   const [username, setUserName] = useState('');
@@ -9,6 +10,12 @@ export default function HomeComponent() {
   const currentRoom = useSelector(state => state.gameRoom.roomName);
 
   const dispatch = useDispatch();
+  const ws = useContext(WebSocketContext);
+
+  const joinGameRoom = (roomId, username) => {
+    dispatch(joinRoom(roomId, username));
+    ws.newPlayer(roomId, username);
+  };
 
   return (
     <>
@@ -48,7 +55,7 @@ export default function HomeComponent() {
             />
             <button
               disabled={!username || !roomId}
-              onClick={() => dispatch(joinRoom(roomId, username))}
+              onClick={() => joinGameRoom(roomId, username)}
             >
               Join
             </button>

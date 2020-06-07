@@ -8,3 +8,4 @@ export const JOIN_ROOM_ERROR = 'JOIN_ROOM_ERROR';
 
 // Players state
 export const ADD_PLAYER = 'ADD_PLAYER';
+export const ADD_NEW_PLAYER = 'ADD_NEW_PLAYER';

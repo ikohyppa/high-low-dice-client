@@ -1,4 +1,4 @@
-import { ADD_PLAYER } from '../actionTypes';
+import { ADD_PLAYER, ADD_NEW_PLAYER } from '../actionTypes';
 
 const initialState = {
   allIds: [],
@@ -15,10 +15,30 @@ export default function (state = initialState, action) {
         byIds: {
           ...state.byIds,
           [id]: {
-            name,
+            name
           }
         }
       };
+    }
+    case ADD_NEW_PLAYER: {
+      console.log(action.payload);
+      const { roomIdd, id, name } = action.payload;
+      console.log(`roomIdd ${roomIdd}`);
+      //console.log(`state.roomId ${fullState.gameRoom.roomId}`);
+      if (roomIdd === 1) {
+        return {
+          ...state,
+          allIds: [...state.allIds, id],
+          byIds: {
+            ...state.byIds,
+            [id]: {
+              name
+            }
+          }
+        };
+      } else {
+        return state;
+      }
     }
     default:
       return state;

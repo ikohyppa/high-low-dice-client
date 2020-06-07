@@ -8,7 +8,8 @@ import {
   JOIN_ROOM_REQUEST,
   JOIN_ROOM_SUCCESS,
   JOIN_ROOM_ERROR,
-  ADD_PLAYER
+  ADD_PLAYER,
+  ADD_NEW_PLAYER
 } from './actionTypes';
 
 export function createRoomRequest() {
@@ -89,10 +90,20 @@ export function joinRoom(roomId, username) {
 
 let nextPlayerId = 0;
 
-export const addPlayer = name => ({
+export const addPlayer = user => ({
   type: ADD_PLAYER,
   payload: {
     id: ++nextPlayerId, //player IDs will start from 1
-    name
+    name: user
   }
 });
+
+export const addNewPlayer = (roomId, user) => ({
+  type: ADD_NEW_PLAYER,
+  payload: {
+    roomId: roomId,
+    id: ++nextPlayerId, //player IDs will start from 1
+    name: user
+  }
+});
+
