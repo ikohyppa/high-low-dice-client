@@ -11,11 +11,13 @@ import {
 } from './actionTypes';
 
 const initialState = {
-  roomId: null,
-  roomName: null,
-  username: null,
+  room: {
+    roomId: null,
+    roomName: null,
+    username: null
+  },
   players: { allIds: [], byIds: {} },
-  game: { gameOn: false, round: 0, turn: 0, rolls: 0 }
+  game: { gameOn: false, round: null, turn: null, rolls: null }
 };
 
 export default function (state = initialState, action) {
@@ -24,18 +26,24 @@ export default function (state = initialState, action) {
       const { id, name, user } = action.payload;
       return {
         ...state,
-        roomId: id,
-        roomName: name,
-        username: user
+        room: {
+          ...state.room,
+          roomId: id,
+          roomName: name,
+          username: user
+        }
       };
     }
     case JOIN_ROOM_SUCCESS: {
       const { id, name, user } = action.payload;
       return {
         ...state,
-        roomId: id,
-        roomName: name,
-        username: user
+        room: {
+          ...state.room,
+          roomId: id,
+          roomName: name,
+          username: user
+        }
       };
     }
     case ADD_PLAYER: {
@@ -43,6 +51,7 @@ export default function (state = initialState, action) {
       return {
         ...state,
         players: {
+          ...state.players,
           allIds: [...state.players.allIds, id],
           byIds: {
             ...state.players.byIds,
@@ -57,10 +66,11 @@ export default function (state = initialState, action) {
     }
     case ADD_NEW_PLAYER: {
       const { roomId, id, name } = action.payload;
-      if (roomId === state.roomId) {
+      if (roomId === state.room.roomId) {
         return {
           ...state,
           players: {
+            ...state.players,
             allIds: [...state.players.allIds, id],
             byIds: {
               ...state.players.byIds,
@@ -80,6 +90,7 @@ export default function (state = initialState, action) {
       return {
         ...state,
         game: {
+          ...state.game,
           gameOn: true,
           round: 1,
           turn: 1,
