@@ -41,7 +41,9 @@ export default function (state = initialState, action) {
           byIds: {
             ...state.players.byIds,
             [id]: {
-              name
+              name,
+              score: 0,
+              rolls: []
             }
           }
         }
@@ -57,7 +59,9 @@ export default function (state = initialState, action) {
             byIds: {
               ...state.players.byIds,
               [id]: {
-                name
+                name,
+                score: 0,
+                rolls: []
               }
             }
           }
