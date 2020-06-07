@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { createRoom, joinRoom } from '../redux/actions';
 import { WebSocketContext } from '../connection/webSocket';
+import Room from './Room';
 
 export default function HomeComponent() {
   const [username, setUserName] = useState('');
@@ -65,7 +66,7 @@ export default function HomeComponent() {
 
       {currentRoom && (
         <>
-          <p>ROOM</p>
+          <Room/>
         </>
       )}
     </>
