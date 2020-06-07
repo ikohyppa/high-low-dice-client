@@ -2,14 +2,20 @@ import {
   CREATE_ROOM_SUCCESS,
   JOIN_ROOM_SUCCESS,
   ADD_PLAYER,
-  ADD_NEW_PLAYER
+  ADD_NEW_PLAYER,
+  NEW_GAME,
+  NEXT_ROUND,
+  NEXT_PLAYER,
+  RESET_TURN,
+  INCREMENT_ROLLS
 } from './actionTypes';
 
 const initialState = {
   roomId: null,
   roomName: null,
   username: null,
-  players: { allIds: [], byIds: {} }
+  players: { allIds: [], byIds: {} },
+  game: { gameOn: false, round: 0, turn: 0, rolls: 0 }
 };
 
 export default function (state = initialState, action) {
@@ -69,6 +75,50 @@ export default function (state = initialState, action) {
       } else {
         return state;
       }
+    }
+    case NEW_GAME: {
+      return {
+        ...state,
+        game: {
+          gameOn: true,
+          round: 1,
+          turn: 1,
+          rolls: 0
+        }
+      };
+    }
+    case NEXT_ROUND: {
+      return {
+        ...state,
+        game: {
+          ...state.game,
+          round: state.game.round + 1,
+          turn: 1,
+          rolls: 0
+        }
+      };
+    }
+    case NEXT_PLAYER: {
+      return {
+        ...state,
+        game: {
+          ...state.game,
+          turn: state.game.turn + 1,
+          rolls: 0
+        }
+      };
+    }
+    case RESET_TURN: {
+      return {
+        ...state,
+        game: { ...state.game, turn: 0 }
+      };
+    }
+    case INCREMENT_ROLLS: {
+      return {
+        ...state,
+        game: { ...state.game, rolls: state.game.rolls + 1 }
+      };
     }
     default:
       return state;

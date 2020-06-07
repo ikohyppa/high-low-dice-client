@@ -8,3 +8,9 @@ export const getPlayerById = (store, id) =>
 
 export const getPlayers = store =>
   getPlayerList(store).map(id => getPlayerById(store, id));
+
+export const getGame = store => store.game;
+
+export const getRound = store => store.game.round;
+
+export const getRolls = store => store.game.rolls;

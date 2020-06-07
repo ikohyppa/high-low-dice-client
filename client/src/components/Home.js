@@ -4,6 +4,7 @@ import { createRoom, joinRoom } from '../redux/actions';
 import { WebSocketContext } from '../connection/webSocket';
 import Room from './Room';
 import Players from './Players';
+import Round from './Round';
 
 export default function HomeComponent() {
   const [username, setUserName] = useState('');
@@ -69,6 +70,7 @@ export default function HomeComponent() {
         <>
           <Room />
           <Players />
+          <Round />
         </>
       )}
     </>

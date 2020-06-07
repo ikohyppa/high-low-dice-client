@@ -9,7 +9,12 @@ import {
   JOIN_ROOM_SUCCESS,
   JOIN_ROOM_ERROR,
   ADD_PLAYER,
-  ADD_NEW_PLAYER
+  ADD_NEW_PLAYER,
+  NEW_GAME,
+  NEXT_ROUND,
+  NEXT_PLAYER,
+  RESET_TURN,
+  INCREMENT_ROLLS
 } from './actionTypes';
 
 export function createRoomRequest() {
@@ -88,6 +93,8 @@ export function joinRoom(roomId, username) {
   };
 }
 
+// ***** players state actions *****
+
 let nextPlayerId = 0;
 
 export const addPlayer = user => ({
@@ -106,3 +113,26 @@ export const addNewPlayer = (roomId, user) => ({
     name: user
   }
 });
+
+// ***** game state actions *****
+
+export const newGame = () => ({
+  type: NEW_GAME
+});
+
+export const nextRound = () => ({
+  type: NEXT_ROUND
+});
+
+export const nextPlayer = () => ({
+  type: NEXT_PLAYER
+});
+
+export const resetTurn = () => ({
+  type: RESET_TURN
+});
+
+export const incrementRolls = () => ({
+  type: INCREMENT_ROLLS
+});
+
