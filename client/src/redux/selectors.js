@@ -1,3 +1,5 @@
+export const getRoom = store => store.room;
+
 export const getPlayersState = store => store.players;
 
 export const getPlayerList = store =>

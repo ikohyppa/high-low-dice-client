@@ -2,7 +2,7 @@ import React, { createContext } from 'react';
 import io from 'socket.io-client';
 import { WS_BASE } from './config';
 import { useDispatch } from 'react-redux';
-import { addNewPlayer } from '../redux/actions';
+import { addNewPlayer, newGame } from '../redux/actions';
 
 const WebSocketContext = createContext(null);
 
@@ -22,17 +22,28 @@ export default ({ children }) => {
     socket.emit('event://send-newplayer', JSON.stringify(payload));
   };
 
+  const startNewGame = roomId => {
+    const payload = { roomId: roomId };
+    socket.emit('event://send-newGame', JSON.stringify(payload));
+  };
+
   if (!socket) {
     socket = io.connect(WS_BASE);
 
     socket.on('event://get-newPlayer', msg => {
-      const {roomId, user} = msg;
+      const { roomId, user } = msg;
       dispatch(addNewPlayer(roomId, user));
+    });
+
+    socket.on('event://get-newGame', msg => {
+      const { roomId } = msg;
+      dispatch(newGame(roomId));
     });
 
     ws = {
       socket: socket,
-      newPlayer
+      newPlayer,
+      startNewGame
     };
   }
 

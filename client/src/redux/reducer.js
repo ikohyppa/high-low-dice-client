@@ -87,16 +87,21 @@ export default function (state = initialState, action) {
       }
     }
     case NEW_GAME: {
-      return {
-        ...state,
-        game: {
-          ...state.game,
-          gameOn: true,
-          round: 1,
-          turn: 1,
-          rolls: 0
-        }
-      };
+      const { roomId } = action.payload;
+      if (roomId === state.room.roomId) {
+        return {
+          ...state,
+          game: {
+            ...state.game,
+            gameOn: true,
+            round: 1,
+            turn: 1,
+            rolls: 0
+          }
+        };
+      } else {
+        return state;
+      }
     }
     case NEXT_ROUND: {
       return {

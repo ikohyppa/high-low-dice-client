@@ -116,8 +116,11 @@ export const addNewPlayer = (roomId, user) => ({
 
 // ***** game state actions *****
 
-export const newGame = () => ({
-  type: NEW_GAME
+export const newGame = roomId => ({
+  type: NEW_GAME,
+  payload: {
+    roomId: roomId
+  }
 });
 
 export const nextRound = () => ({
@@ -135,4 +138,3 @@ export const resetTurn = () => ({
 export const incrementRolls = () => ({
   type: INCREMENT_ROLLS
 });
-
