@@ -47,7 +47,8 @@ export default function (state = initialState, action) {
       };
     }
     case ADD_PLAYER: {
-      const { id, name } = action.payload;
+      const { name } = action.payload;
+      let id = state.players.allIds.length + 1;
       return {
         ...state,
         players: {
@@ -65,8 +66,9 @@ export default function (state = initialState, action) {
       };
     }
     case ADD_NEW_PLAYER: {
-      const { roomId, id, name } = action.payload;
+      const { roomId, name } = action.payload;
       if (roomId === state.room.roomId) {
+        let id = state.players.allIds.length + 1;
         return {
           ...state,
           players: {

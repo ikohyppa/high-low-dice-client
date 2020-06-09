@@ -95,12 +95,12 @@ export function joinRoom(roomId, username) {
 
 // ***** players state actions *****
 
-let nextPlayerId = 0;
+//let nextPlayerId = 0;
 
 export const addPlayer = user => ({
   type: ADD_PLAYER,
   payload: {
-    id: ++nextPlayerId, //player IDs will start from 1
+    //id: ++nextPlayerId, //player IDs will start from 1
     name: user
   }
 });
@@ -109,7 +109,7 @@ export const addNewPlayer = (roomId, user) => ({
   type: ADD_NEW_PLAYER,
   payload: {
     roomId: roomId,
-    id: ++nextPlayerId,
+    //id: ++nextPlayerId,
     name: user
   }
 });
