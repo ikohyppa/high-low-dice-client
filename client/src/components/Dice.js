@@ -1,139 +1,119 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Button } from 'react-bootstrap';
 
 import { incrementRolls, nextPlayer } from '../redux/actions';
-import { getGame, getPlayers, getPlayerById } from '../redux/selectors';
+import {
+  getGame,
+  getPlayers,
+  getPlayerById
+} from '../redux/selectors';
 
 import PlayerRollsModal from './PlayerRollsModal';
 
-class Dice extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      dice: [
-        { value: null, ready: false },
-        { value: null, ready: false },
-        { value: null, ready: false },
-        { value: null, ready: false },
-        { value: null, ready: false },
-        { value: null, ready: false }
-      ],
-      showModal: false
-    };
-  }
+const Dice = props => {
+  const initialDice = [
+    { value: null, ready: false },
+    { value: null, ready: false },
+    { value: null, ready: false },
+    { value: null, ready: false },
+    { value: null, ready: false },
+    { value: null, ready: false }
+  ];
+  const [dice, setDice] = useState(initialDice);
+  const [showModal, setShowModal] = useState(false);
 
-  componentDidUpdate(prevProps) {
-    if (this.state.dice.every(dice => dice.ready)) {
-      this.resetDice();
-      this.showModal();
+  const { incrementRolls, nextPlayer, playerInTurn } = props;
+  const { gameOn, round, rolls } = props.game;
+
+  useEffect(() => {
+    if (dice.every(die => die.ready)) {
+      resetDice();
+      setShowModal(true);
     }
-  }
+  }, [dice]);
 
-  resetDice() {
-    this.setState(prevState => ({
-      dice: prevState.dice.map(() => {
-        return { value: null, ready: false };
-      })
-    }));
-  }
-
-  showModal = () => {
-    this.setState({ showModal: true });
+  const resetDice = () => {
+    setDice(initialDice);
   };
 
-  hideModal = () => {
-    this.setState({ showModal: false });
+  const updateDice = diceValues => {
+    let tempDice = dice;
+    tempDice.map((die, index) => {
+      return die.ready === false
+        ? {
+            value: diceValues[index],
+            ready: diceValues[index] === round
+          }
+        : die;
+    });
   };
 
-  updateDice = diceValues => {
-    this.setState(prevState => ({
-      dice: prevState.dice.map((dice, index) => {
-        return dice.ready === false
-          ? {
-              ...dice,
-              value: diceValues[index],
-              ready: diceValues[index] === this.props.game.round
-            }
-          : dice;
-      })
-    }));
-  };
-
-  rollDice = () => {
+  const rollDice = () => {
     const zeroValues = [0, 0, 0, 0, 0, 0];
     const randomValues = zeroValues.map(() => {
       return Math.floor(Math.random() * 6) + 1;
     });
-    this.props.incrementRolls();
-    this.updateDice(randomValues);
+    incrementRolls();
+    updateDice(randomValues);
   };
 
-  handleTurnEnd = () => {
-    this.hideModal();
-    this.props.nextPlayer();
+  const handleTurnEnd = () => {
+    setShowModal(false);
+    nextPlayer();
   };
 
-  render() {
-    const { dice, showModal } = this.state;
-    const { game, playerInTurn } = this.props;
-    return (
+  return (
+    <div>
       <div>
-        <div>
-          <table>
-            <tbody>
-              <tr>
-                <th>Dice1</th>
-                <th>Dice2</th>
-                <th>Dice3</th>
-                <th>Dice4</th>
-                <th>Dice5</th>
-                <th>Dice6</th>
-              </tr>
-              <tr>
-                {dice.map((dice, index) => {
-                  return <td key={index}>{dice.ready ? dice.value : '_'}</td>;
-                })}
-              </tr>
-              <tr>
-                {dice.map((dice, index) => {
-                  return (
-                    <td key={index}>{!dice.ready ? dice.value || '_' : '_'}</td>
-                  );
-                })}
-              </tr>
-            </tbody>
-          </table>
-          <Button
-            variant='primary'
-            disabled={
-              !game.gameOn ||
-              game.round > 6 ||
-              showModal ||
-              this.props.showRoundModal
-            }
-            onClick={this.rollDice}
-          >
-            Roll Dice
-          </Button>
-        </div>
-        <PlayerRollsModal
-          show={showModal}
-          onClose={this.handleTurnEnd}
-          title={`Round ${game.round}`}
-          buttonText={'Next Player'}
+        <table>
+          <tbody>
+            <tr>
+              <th>Dice1</th>
+              <th>Dice2</th>
+              <th>Dice3</th>
+              <th>Dice4</th>
+              <th>Dice5</th>
+              <th>Dice6</th>
+            </tr>
+            <tr>
+              {dice.map((dice, index) => {
+                return <td key={index}>{dice.ready ? dice.value : '_'}</td>;
+              })}
+            </tr>
+            <tr>
+              {dice.map((dice, index) => {
+                return (
+                  <td key={index}>{!dice.ready ? dice.value || '_' : '_'}</td>
+                );
+              })}
+            </tr>
+          </tbody>
+        </table>
+        <Button
+          variant='primary'
+          disabled={!gameOn || round > 6 || showModal}
+          onClick={rollDice}
         >
-          {game.gameOn && (
-            <>
-              <p>Player: {playerInTurn.name}</p>
-              <p>Rolls: {game.rolls}</p>
-            </>
-          )}
-        </PlayerRollsModal>
+          Roll Dice
+        </Button>
       </div>
-    );
-  }
-}
+      <PlayerRollsModal
+        show={showModal}
+        onClose={handleTurnEnd}
+        title={`Round ${round}`}
+        buttonText={'Next Player'}
+      >
+        {gameOn && (
+          <>
+            <p>Player: {playerInTurn.name}</p>
+            <p>Rolls: {rolls}</p>
+          </>
+        )}
+      </PlayerRollsModal>
+    </div>
+  );
+};
 
 export default connect(
   state => ({
