@@ -38,8 +38,7 @@ const Dice = props => {
   };
 
   const updateDice = diceValues => {
-    let tempDice = dice;
-    tempDice.map((die, index) => {
+    let tempDice = dice.map((die, index) => {
       return die.ready === false
         ? {
             value: diceValues[index],
@@ -47,6 +46,7 @@ const Dice = props => {
           }
         : die;
     });
+    setDice(tempDice);
   };
 
   const rollDice = () => {
