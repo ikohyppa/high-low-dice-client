@@ -16,3 +16,5 @@ export const getGame = store => store.game;
 export const getRound = store => store.game.round;
 
 export const getRolls = store => store.game.rolls;
+
+export const getDice = store => store.dice;

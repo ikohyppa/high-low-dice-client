@@ -14,8 +14,11 @@ import {
   NEXT_ROUND,
   NEXT_PLAYER,
   RESET_TURN,
-  INCREMENT_ROLLS
+  INCREMENT_ROLLS,
+  ROLL_DICE
 } from './actionTypes';
+
+// ***** room state actions *****
 
 export function createRoomRequest() {
   return {
@@ -137,4 +140,14 @@ export const resetTurn = () => ({
 
 export const incrementRolls = () => ({
   type: INCREMENT_ROLLS
+});
+
+// ***** dice state actions *****
+
+export const diceRolled = (roomId, dice) => ({
+  type: ROLL_DICE,
+  payload: {
+    roomId: roomId,
+    dice: dice
+  }
 });

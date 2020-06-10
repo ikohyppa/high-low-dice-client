@@ -2,7 +2,7 @@ import React, { createContext } from 'react';
 import io from 'socket.io-client';
 import { WS_BASE } from './config';
 import { useDispatch } from 'react-redux';
-import { addNewPlayer, newGame } from '../redux/actions';
+import { addNewPlayer, newGame, diceRolled } from '../redux/actions';
 
 const WebSocketContext = createContext(null);
 
@@ -24,26 +24,37 @@ export default ({ children }) => {
 
   const startNewGame = roomId => {
     const payload = { roomId: roomId };
-    socket.emit('event://send-newGame', JSON.stringify(payload));
+    socket.emit('event://send-newgame', JSON.stringify(payload));
+  };
+
+  const rollDice = roomId => {
+    const payload = { roomId: roomId };
+    socket.emit('event://send-rolldice', JSON.stringify(payload));
   };
 
   if (!socket) {
     socket = io.connect(WS_BASE);
 
-    socket.on('event://get-newPlayer', msg => {
+    socket.on('event://get-newplayer', msg => {
       const { roomId, user } = msg;
       dispatch(addNewPlayer(roomId, user));
     });
 
-    socket.on('event://get-newGame', msg => {
+    socket.on('event://get-newgame', msg => {
       const { roomId } = msg;
       dispatch(newGame(roomId));
+    });
+
+    socket.on('event://get-rolldice', msg => {
+      const { roomId, dice } = msg;
+      dispatch(diceRolled(roomId, dice));
     });
 
     ws = {
       socket: socket,
       newPlayer,
-      startNewGame
+      startNewGame,
+      rollDice
     };
   }
 

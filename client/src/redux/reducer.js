@@ -7,7 +7,8 @@ import {
   NEXT_ROUND,
   NEXT_PLAYER,
   RESET_TURN,
-  INCREMENT_ROLLS
+  INCREMENT_ROLLS,
+  ROLL_DICE
 } from './actionTypes';
 
 const initialState = {
@@ -17,7 +18,17 @@ const initialState = {
     username: null
   },
   players: { allIds: [], byIds: {} },
-  game: { gameOn: false, round: null, turn: null, rolls: null }
+  game: { gameOn: false, round: null, turn: null, rolls: null },
+  dice: {
+    dice: [
+      { value: null, ready: false },
+      { value: null, ready: false },
+      { value: null, ready: false },
+      { value: null, ready: false },
+      { value: null, ready: false },
+      { value: null, ready: false }
+    ]
+  }
 };
 
 export default function (state = initialState, action) {
@@ -137,6 +148,28 @@ export default function (state = initialState, action) {
         ...state,
         game: { ...state.game, rolls: state.game.rolls + 1 }
       };
+    }
+    case ROLL_DICE: {
+      const { roomId, dice } = action.payload;
+      if (roomId === state.room.roomId) {
+        let currentDice = state.dice.dice;
+        console.log(currentDice);
+        let tempDice = currentDice.map((die, index) => {
+          return die.ready === false
+            ? {
+                value: dice[index],
+                ready: dice[index] === state.game.round
+              }
+            : { ...state.dice.dice[index] };
+        });
+        return {
+          ...state,
+          game: { ...state.game, rolls: state.game.rolls + 1 },
+          dice: { ...state.dice, dice: tempDice }
+        };
+      } else {
+        return state;
+      }
     }
     default:
       return state;

@@ -1,30 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { connect } from 'react-redux';
+import { WebSocketContext } from '../connection/webSocket';
 import { Button } from 'react-bootstrap';
 
-import { incrementRolls, nextPlayer } from '../redux/actions';
+import { nextPlayer } from '../redux/actions';
 import {
+  getRoom,
   getGame,
   getPlayers,
-  getPlayerById
+  getPlayerById,
+  getDice
 } from '../redux/selectors';
 
 import PlayerRollsModal from './PlayerRollsModal';
 
 const Dice = props => {
-  const initialDice = [
-    { value: null, ready: false },
-    { value: null, ready: false },
-    { value: null, ready: false },
-    { value: null, ready: false },
-    { value: null, ready: false },
-    { value: null, ready: false }
-  ];
-  const [dice, setDice] = useState(initialDice);
+ 
   const [showModal, setShowModal] = useState(false);
 
-  const { incrementRolls, nextPlayer, playerInTurn } = props;
+  const { nextPlayer, playerInTurn } = props;
+  const { roomId } = props.room;
   const { gameOn, round, rolls } = props.game;
+  const { dice } = props.dice;
+
+  const ws = useContext(WebSocketContext);
 
   useEffect(() => {
     if (dice.every(die => die.ready)) {
@@ -34,28 +33,11 @@ const Dice = props => {
   }, [dice]);
 
   const resetDice = () => {
-    setDice(initialDice);
-  };
-
-  const updateDice = diceValues => {
-    let tempDice = dice.map((die, index) => {
-      return die.ready === false
-        ? {
-            value: diceValues[index],
-            ready: diceValues[index] === round
-          }
-        : die;
-    });
-    setDice(tempDice);
+    //setDiceValues(initialDice);
   };
 
   const rollDice = () => {
-    const zeroValues = [0, 0, 0, 0, 0, 0];
-    const randomValues = zeroValues.map(() => {
-      return Math.floor(Math.random() * 6) + 1;
-    });
-    incrementRolls();
-    updateDice(randomValues);
+    ws.rollDice(roomId);
   };
 
   const handleTurnEnd = () => {
@@ -77,14 +59,14 @@ const Dice = props => {
               <th>Dice6</th>
             </tr>
             <tr>
-              {dice.map((dice, index) => {
-                return <td key={index}>{dice.ready ? dice.value : '_'}</td>;
+              {dice.map((die, index) => {
+                return <td key={index}>{die.ready ? die.value : '_'}</td>;
               })}
             </tr>
             <tr>
-              {dice.map((dice, index) => {
+              {dice.map((die, index) => {
                 return (
-                  <td key={index}>{!dice.ready ? dice.value || '_' : '_'}</td>
+                  <td key={index}>{!die.ready ? die.value || '_' : '_'}</td>
                 );
               })}
             </tr>
@@ -117,12 +99,13 @@ const Dice = props => {
 
 export default connect(
   state => ({
+    room: getRoom(state),
     game: getGame(state),
     players: getPlayers(state),
-    playerInTurn: getPlayerById(state, state.game.playerInTurn)
+    playerInTurn: getPlayerById(state, state.game.playerInTurn),
+    dice: getDice(state)
   }),
   {
-    incrementRolls,
     nextPlayer
   }
 )(Dice);
