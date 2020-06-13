@@ -7,7 +7,7 @@ import '../App.css';
 const PlayerRollsModal = props => {
   const { show, handleClose, title, buttonText } = props;
   return (
-    <Modal show={show} onClose={handleClose} data-background={false}/* backdrop='static' */ className='modal'>
+    <Modal show={show} onClose={handleClose} className='modal'>
       <Modal.Header>
         <Modal.Title>{title}</Modal.Title>
       </Modal.Header>

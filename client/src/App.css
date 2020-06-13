@@ -42,14 +42,14 @@
   z-index: 1500;
   background-color: white;
   box-sizing: border-box;
-  width: 40%;
-  height: 40%;
+  width: 350px;
+  height: auto;
   border: 3px solid #ccc;
   box-shadow: 3px 3px 3px black;
-  padding-left: 15px;
-  padding-right: 15px;
-  padding-top: 0px;
-  padding-bottom: 0px;
+  padding-left: 25px;
+  padding-right: 25px;
+  padding-top: 1px;
+  padding-bottom: 1px;
   left: 25%;
   top: 10%;
 }
