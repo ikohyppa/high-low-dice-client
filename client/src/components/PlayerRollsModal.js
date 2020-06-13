@@ -5,26 +5,21 @@ import { getGame, getPlayers } from '../redux/selectors';
 import '../App.css';
 
 const PlayerRollsModal = props => {
-  const { show, onClose, title, buttonText } = props;
+  const { show, handleClose, title, buttonText } = props;
   return (
-    <div>
-      {show && (
-        <Modal.Dialog className='modal2'>
-          <Modal.Header>
-            <Modal.Title>{title}</Modal.Title>
-          </Modal.Header>
+    <Modal show={show} onClose={handleClose} data-background={false}/* backdrop='static' */ className='modal'>
+      <Modal.Header>
+        <Modal.Title>{title}</Modal.Title>
+      </Modal.Header>
 
-          <Modal.Body>{props.children}</Modal.Body>
+      <Modal.Body>{props.children}</Modal.Body>
 
-          <Modal.Footer>
-            <Button variant='primary' onClick={onClose}>
-              {buttonText}
-            </Button>
-          </Modal.Footer>
-        </Modal.Dialog>
-      )}
-      {!show && null}
-    </div>
+      <Modal.Footer>
+        <Button variant='primary' onClick={handleClose}>
+          {buttonText}
+        </Button>
+      </Modal.Footer>
+    </Modal>
   );
 };
 

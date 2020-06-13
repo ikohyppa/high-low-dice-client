@@ -78,16 +78,12 @@ const Dice = props => {
       </div>
       <PlayerRollsModal
         show={showModal}
-        onClose={handleTurnEnd}
+        handleClose={handleTurnEnd}
         title={`Round ${round}`}
         buttonText={'Next Player'}
       >
-        {gameOn && (
-          <>
-            <p>Player: {playerInTurn.name}</p>
-            <p>Rolls: {rolls}</p>
-          </>
-        )}
+        <p>Player: {playerInTurn.name}</p>
+        <p>Rolls: {rolls}</p>
       </PlayerRollsModal>
     </div>
   );
