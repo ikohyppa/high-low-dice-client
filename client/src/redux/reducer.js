@@ -134,6 +134,10 @@ export default function (state = initialState, action) {
           ...state.game,
           turn: state.game.turn + 1,
           rolls: 0
+        },
+        dice: {
+          ...state.dice,
+          dice: initialState.dice.dice
         }
       };
     }
@@ -153,7 +157,6 @@ export default function (state = initialState, action) {
       const { roomId, dice } = action.payload;
       if (roomId === state.room.roomId) {
         let currentDice = state.dice.dice;
-        console.log(currentDice);
         let tempDice = currentDice.map((die, index) => {
           return die.ready === false
             ? {

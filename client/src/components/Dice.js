@@ -15,26 +15,20 @@ import {
 import PlayerRollsModal from './PlayerRollsModal';
 
 const Dice = props => {
- 
   const [showModal, setShowModal] = useState(false);
 
   const { nextPlayer, playerInTurn } = props;
-  const { roomId } = props.room;
-  const { gameOn, round, rolls } = props.game;
+  const { roomId, username } = props.room;
+  const { gameOn, round, turn, rolls } = props.game;
   const { dice } = props.dice;
 
   const ws = useContext(WebSocketContext);
 
   useEffect(() => {
     if (dice.every(die => die.ready)) {
-      resetDice();
       setShowModal(true);
     }
   }, [dice]);
-
-  const resetDice = () => {
-    //setDiceValues(initialDice);
-  };
 
   const rollDice = () => {
     ws.rollDice(roomId);
@@ -74,7 +68,9 @@ const Dice = props => {
         </table>
         <Button
           variant='primary'
-          disabled={!gameOn || round > 6 || showModal}
+          disabled={
+            !gameOn || playerInTurn.name !== username || round > 6 || showModal
+          }
           onClick={rollDice}
         >
           Roll Dice
@@ -102,7 +98,7 @@ export default connect(
     room: getRoom(state),
     game: getGame(state),
     players: getPlayers(state),
-    playerInTurn: getPlayerById(state, state.game.playerInTurn),
+    playerInTurn: getPlayerById(state, state.game.turn),
     dice: getDice(state)
   }),
   {
