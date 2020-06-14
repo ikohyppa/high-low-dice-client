@@ -140,10 +140,13 @@ export const incrementRolls = () => ({
 
 // ***** dice state actions *****
 
-export const diceRolled = (roomId, dice) => ({
+export const diceRolled = (roomId, dice, round, id, rolls) => ({
   type: ROLL_DICE,
   payload: {
     roomId: roomId,
-    dice: dice
+    dice: dice,
+    round: round,
+    id: id,
+    rolls: rolls
   }
 });

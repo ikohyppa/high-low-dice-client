@@ -27,8 +27,8 @@ export default ({ children }) => {
     socket.emit('event://send-newgame', JSON.stringify(payload));
   };
 
-  const rollDice = roomId => {
-    const payload = { roomId: roomId };
+  const rollDice = (roomId, round, turn, rolls) => {
+    const payload = { roomId: roomId, round: round, id: turn, rolls: rolls };
     socket.emit('event://send-rolldice', JSON.stringify(payload));
   };
 
@@ -46,8 +46,8 @@ export default ({ children }) => {
     });
 
     socket.on('event://get-rolldice', msg => {
-      const { roomId, dice } = msg;
-      dispatch(diceRolled(roomId, dice));
+      const { roomId, dice, round, id, rolls } = msg;
+      dispatch(diceRolled(roomId, dice, round, id, rolls));
     });
 
     ws = {

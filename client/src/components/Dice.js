@@ -31,7 +31,7 @@ const Dice = props => {
   }, [dice]);
 
   const rollDice = () => {
-    ws.rollDice(roomId);
+    ws.rollDice(roomId, round, turn, rolls);
   };
 
   const handleTurnEnd = () => {

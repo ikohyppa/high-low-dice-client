@@ -154,7 +154,7 @@ export default function (state = initialState, action) {
       };
     }
     case ROLL_DICE: {
-      const { roomId, dice } = action.payload;
+      const { roomId, dice, round, id, rolls } = action.payload;
       if (roomId === state.room.roomId) {
         let currentDice = state.dice.dice;
         let tempDice = currentDice.map((die, index) => {
@@ -167,8 +167,22 @@ export default function (state = initialState, action) {
         });
         return {
           ...state,
-          game: { ...state.game, rolls: state.game.rolls + 1 },
-          dice: { ...state.dice, dice: tempDice }
+          game: { ...state.game, rolls: rolls + 1 },
+          dice: { ...state.dice, dice: tempDice },
+          players: {
+            ...state.players,
+            byIds: {
+              ...state.players.byIds,
+              [id]: {
+                ...state.players.byIds[id],
+                rolls: [
+                  ...state.players.byIds[id].rolls.slice(0, round - 1),
+                  rolls + 1,
+                  ...state.players.byIds[id].rolls.slice(round)
+                ]
+              }
+            }
+          }
         };
       } else {
         return state;
