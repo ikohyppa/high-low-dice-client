@@ -12,7 +12,7 @@ import {
   getDice
 } from '../redux/selectors';
 
-import PlayerRollsModal from './PlayerRollsModal';
+import SummaryModal from './SummaryModal';
 
 const Dice = props => {
   const [showModal, setShowModal] = useState(false);
@@ -76,7 +76,7 @@ const Dice = props => {
           Roll Dice
         </Button>
       </div>
-      <PlayerRollsModal
+      <SummaryModal
         show={showModal}
         handleClose={handleTurnEnd}
         title={`Round ${round}`}
@@ -84,7 +84,7 @@ const Dice = props => {
       >
         <p>Player: {playerInTurn.name}</p>
         <p>Rolls: {rolls}</p>
-      </PlayerRollsModal>
+      </SummaryModal>
     </div>
   );
 };

@@ -10,7 +10,7 @@ import {
 } from '../redux/selectors';
 import { newGame, nextRound, resetTurn } from '../redux/actions';
 import Dice from './Dice';
-import PlayerRollsModal from './PlayerRollsModal';
+import SummaryModal from './SummaryModal';
 
 const Round = props => {
   const [showModal, setShowModal] = useState(false);
@@ -59,48 +59,44 @@ const Round = props => {
       </div>
       <div>Rolls: {rolls}</div>
       <Dice showRoundModal={showModal} />
-      <PlayerRollsModal
+      <SummaryModal
         show={showModal}
-        onClose={handleStartNextRound}
+        handleClose={handleStartNextRound}
         title={`Round ${round} summary`}
         buttonText={'Next Round'}
       >
-        {gameOn && (
-          <table>
-            <tbody>
-              {players.map(player => {
-                return (
-                  <tr key={`player-${player.id}`}>
-                    <td>{player.name}</td>
-                    <td>{player.rolls[round - 1]}</td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        )}
-      </PlayerRollsModal>
-      <PlayerRollsModal
+        <table>
+          <tbody>
+            {players.map(player => {
+              return (
+                <tr key={`player-${player.id}`}>
+                  <td>{player.name}</td>
+                  <td>{player.rolls[round - 1]}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </SummaryModal>
+      <SummaryModal
         show={round > 6}
-        onClose={handleNewGame}
+        handleClose={handleNewGame}
         title={`Game summary`}
         buttonText={'New Game'}
       >
-        {round > 6 && (
-          <table>
-            <tbody>
-              {players.map(player => {
-                return (
-                  <tr key={`player-${player.id}`}>
-                    <td>{player.name}</td>
-                    <td>{player.score}</td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        )}
-      </PlayerRollsModal>
+        <table>
+          <tbody>
+            {players.map(player => {
+              return (
+                <tr key={`player-${player.id}`}>
+                  <td>{player.name}</td>
+                  <td>{player.score}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </SummaryModal>
     </div>
   );
 };

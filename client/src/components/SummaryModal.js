@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { getGame, getPlayers } from '../redux/selectors';
 import '../App.css';
 
-const PlayerRollsModal = props => {
+const SummaryModal = props => {
   const { show, handleClose, title, buttonText } = props;
   return (
     <Modal show={show} onClose={handleClose} className='modal'>
@@ -26,4 +26,4 @@ const PlayerRollsModal = props => {
 export default connect(
   state => ({ game: getGame(state), players: getPlayers(state) }),
   null
-)(PlayerRollsModal);
+)(SummaryModal);
