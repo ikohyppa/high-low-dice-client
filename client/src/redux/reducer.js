@@ -7,6 +7,8 @@ import {
   NEXT_ROUND,
   NEXT_PLAYER,
   INCREMENT_ROLLS,
+  UPDATE_ROUND_LOW,
+  UPDATE_ROUND_HIGH,
   WAITING_PLAYERS,
   PLAYER_READY,
   ROLL_DICE
@@ -19,7 +21,15 @@ const initialState = {
     username: null
   },
   players: { allIds: [], byIds: {} },
-  game: { gameOn: false, round: null, turn: null, rolls: null, waiting: [] },
+  game: {
+    gameOn: false,
+    round: null,
+    turn: null,
+    rolls: null,
+    roundLows: [0, 0, 0, 0, 0, 0],
+    roundHighs: [0, 0, 0, 0, 0, 0],
+    waiting: []
+  },
   dice: {
     dice: [
       { value: null, ready: false },
@@ -146,6 +156,34 @@ export default function (state = initialState, action) {
       return {
         ...state,
         game: { ...state.game, rolls: state.game.rolls + 1 }
+      };
+    }
+    case UPDATE_ROUND_LOW: {
+      const { round, newLow } = action.payload;
+      return {
+        ...state,
+        game: {
+          ...state.game,
+          roundLows: [
+            ...state.game.roundLows.slice(0, round - 1),
+            newLow,
+            ...state.game.roundLows.slice(round)
+          ]
+        }
+      };
+    }
+    case UPDATE_ROUND_HIGH: {
+      const { round, newHigh } = action.payload;
+      return {
+        ...state,
+        game: {
+          ...state.game,
+          roundHighs: [
+            ...state.game.roundHighs.slice(0, round - 1),
+            newHigh,
+            ...state.game.roundHighs.slice(round)
+          ]
+        }
       };
     }
     case WAITING_PLAYERS: {

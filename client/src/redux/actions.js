@@ -14,6 +14,8 @@ import {
   NEXT_ROUND,
   NEXT_PLAYER,
   INCREMENT_ROLLS,
+  UPDATE_ROUND_LOW,
+  UPDATE_ROUND_HIGH,
   WAITING_PLAYERS,
   PLAYER_READY,
   ROLL_DICE
@@ -133,6 +135,16 @@ export const nextPlayer = () => ({
 
 export const incrementRolls = () => ({
   type: INCREMENT_ROLLS
+});
+
+export const updateRoundLow = (round, newLow) => ({
+  type: UPDATE_ROUND_LOW,
+  payload: { round, newLow }
+});
+
+export const updateRoundHigh = (round, newHigh) => ({
+  type: UPDATE_ROUND_HIGH,
+  payload: { round, newHigh }
 });
 
 export const waitingPlayers = () => ({

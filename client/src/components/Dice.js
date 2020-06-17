@@ -4,7 +4,7 @@ import { WebSocketContext } from '../connection/webSocket';
 import { Button } from 'react-bootstrap';
 import _ from 'lodash';
 
-import { nextPlayer, waitingPlayers } from '../redux/actions';
+import { nextPlayer, waitingPlayers, updateRoundLow, updateRoundHigh } from '../redux/actions';
 import {
   getRoom,
   getGame,
@@ -18,9 +18,24 @@ import SummaryModal from './SummaryModal';
 const Dice = props => {
   const [showSummary, setShowSummary] = useState(false);
 
-  const { nextPlayer, waitingPlayers, players, playerInTurn } = props;
+  const {
+    nextPlayer,
+    waitingPlayers,
+    updateRoundLow,
+    updateRoundHigh,
+    players,
+    playerInTurn
+  } = props;
   const { roomId, username } = props.room;
-  const { gameOn, round, turn, rolls, waiting } = props.game;
+  const {
+    gameOn,
+    round,
+    turn,
+    rolls,
+    roundLows,
+    roundHighs,
+    waiting
+  } = props.game;
   const { dice } = props.dice;
 
   const ws = useContext(WebSocketContext);
@@ -35,12 +50,24 @@ const Dice = props => {
     }
   }, [dice]);
 
+  const updateRoundLowAndHigh = () => {
+    if (playerInTurn.id === 1) {
+      updateRoundLow(round, rolls);
+      updateRoundHigh(round, rolls);
+    } else if (rolls < roundLows[round - 1]) {
+      updateRoundLow(round, rolls);
+    } else if (rolls > roundHighs[round - 1]) {
+      updateRoundHigh(round, rolls);
+    }
+  };
+
   const rollDice = () => {
     ws.rollDice(roomId, round, turn, rolls);
   };
 
   const handleTurnEnd = () => {
     setShowSummary(false);
+    updateRoundLowAndHigh();
     ws.playerReady(roomId, userId);
     nextPlayer();
   };
@@ -115,6 +142,8 @@ export default connect(
   }),
   {
     nextPlayer,
-    waitingPlayers
+    waitingPlayers,
+    updateRoundLow,
+    updateRoundHigh
   }
 )(Dice);
