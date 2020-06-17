@@ -13,8 +13,9 @@ import {
   NEW_GAME,
   NEXT_ROUND,
   NEXT_PLAYER,
-  RESET_TURN,
   INCREMENT_ROLLS,
+  WAITING_PLAYERS,
+  PLAYER_READY,
   ROLL_DICE
 } from './actionTypes';
 
@@ -130,12 +131,20 @@ export const nextPlayer = () => ({
   type: NEXT_PLAYER
 });
 
-export const resetTurn = () => ({
-  type: RESET_TURN
-});
-
 export const incrementRolls = () => ({
   type: INCREMENT_ROLLS
+});
+
+export const waitingPlayers = () => ({
+  type: WAITING_PLAYERS
+});
+
+export const playerIsReady = (roomId, userId) => ({
+  type: PLAYER_READY,
+  payload: {
+    roomId: roomId,
+    playerId: userId
+  }
 });
 
 // ***** dice state actions *****

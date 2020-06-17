@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { connect, useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import { WebSocketContext } from '../connection/webSocket';
 import { Button } from 'react-bootstrap';
 import {
@@ -8,28 +8,26 @@ import {
   getGame,
   getPlayerById
 } from '../redux/selectors';
-import { newGame, nextRound, resetTurn } from '../redux/actions';
+import { newGame, nextRound } from '../redux/actions';
 import Dice from './Dice';
 import SummaryModal from './SummaryModal';
 
 const Round = props => {
   const [showModal, setShowModal] = useState(false);
-  const { nextRound, resetTurn, players, playerInTurn } = props;
+  const { newGame, nextRound, players, playerInTurn } = props;
   const { roomId } = props.room;
   const { gameOn, round, turn, rolls } = props.game;
 
-  const dispatch = useDispatch();
   const ws = useContext(WebSocketContext);
 
   useEffect(() => {
     if (gameOn && turn > players.length) {
-      resetTurn();
       setShowModal(true);
     }
   }, [turn]);
 
   const handleNewGame = () => {
-    dispatch(newGame(roomId));
+    newGame(roomId);
     ws.startNewGame(roomId);
   };
 
@@ -108,5 +106,5 @@ export default connect(
     players: getPlayers(state),
     playerInTurn: getPlayerById(state, state.game.turn)
   }),
-  { newGame, nextRound, resetTurn }
+  { newGame, nextRound }
 )(Round);

@@ -14,10 +14,11 @@ export const ADD_NEW_PLAYER = 'ADD_NEW_PLAYER';
 export const NEW_GAME = 'NEW_GAME';
 export const NEXT_ROUND = 'NEXT_ROUND';
 export const NEXT_PLAYER = 'NEXT_PLAYER';
-export const RESET_TURN = 'RESET_TURN';
 export const INCREMENT_ROLLS = 'INCREMENT_ROLLS';
-export const ADD_ROUND_ROLLS = 'ADD_ROUND_ROLLS';
-export const UPDATE_ROUND_LOW = 'UPDATE_ROUND_LOW';
+export const WAITING_PLAYERS = 'WAITING_PLAYERS';
+export const PLAYER_READY = 'PLAYER_READY';
+//export const ADD_ROUND_ROLLS = 'ADD_ROUND_ROLLS';
+//export const UPDATE_ROUND_LOW = 'UPDATE_ROUND_LOW';
 
 // Dice state
 export const ROLL_DICE = 'ROLL_DICE';

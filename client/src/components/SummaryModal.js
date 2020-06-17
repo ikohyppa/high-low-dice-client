@@ -5,9 +5,15 @@ import { getGame, getPlayers } from '../redux/selectors';
 import '../App.css';
 
 const SummaryModal = props => {
-  const { show, handleClose, title, buttonText } = props;
+  const {
+    show,
+    handleClose,
+    title,
+    showButton = true,
+    buttonText = ''
+  } = props;
   return (
-    <Modal show={show} onClose={handleClose} className='modal'>
+    <Modal show={show} className='modal'>
       <Modal.Header>
         <Modal.Title>{title}</Modal.Title>
       </Modal.Header>
@@ -15,9 +21,11 @@ const SummaryModal = props => {
       <Modal.Body>{props.children}</Modal.Body>
 
       <Modal.Footer>
-        <Button variant='primary' onClick={handleClose}>
-          {buttonText}
-        </Button>
+        {showButton && (
+          <Button variant='primary' onClick={handleClose}>
+            {buttonText}
+          </Button>
+        )}
       </Modal.Footer>
     </Modal>
   );

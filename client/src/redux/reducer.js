@@ -6,8 +6,9 @@ import {
   NEW_GAME,
   NEXT_ROUND,
   NEXT_PLAYER,
-  RESET_TURN,
   INCREMENT_ROLLS,
+  WAITING_PLAYERS,
+  PLAYER_READY,
   ROLL_DICE
 } from './actionTypes';
 
@@ -18,7 +19,7 @@ const initialState = {
     username: null
   },
   players: { allIds: [], byIds: {} },
-  game: { gameOn: false, round: null, turn: null, rolls: null },
+  game: { gameOn: false, round: null, turn: null, rolls: null, waiting: [] },
   dice: {
     dice: [
       { value: null, ready: false },
@@ -141,17 +142,31 @@ export default function (state = initialState, action) {
         }
       };
     }
-    case RESET_TURN: {
-      return {
-        ...state,
-        game: { ...state.game, turn: 0 }
-      };
-    }
     case INCREMENT_ROLLS: {
       return {
         ...state,
         game: { ...state.game, rolls: state.game.rolls + 1 }
       };
+    }
+    case WAITING_PLAYERS: {
+      return {
+        ...state,
+        game: { ...state.game, waiting: state.players.allIds }
+      };
+    }
+    case PLAYER_READY: {
+      const { roomId, playerId } = action.payload;
+      if (roomId === state.room.roomId) {
+        return {
+          ...state,
+          game: {
+            ...state.game,
+            waiting: state.game.waiting.filter(value => value !== playerId)
+          }
+        };
+      } else {
+        return state;
+      }
     }
     case ROLL_DICE: {
       const { roomId, dice, round, id, rolls } = action.payload;

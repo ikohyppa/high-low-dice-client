@@ -2,8 +2,9 @@ import React, { useState, useEffect, useContext } from 'react';
 import { connect } from 'react-redux';
 import { WebSocketContext } from '../connection/webSocket';
 import { Button } from 'react-bootstrap';
+import _ from 'lodash';
 
-import { nextPlayer } from '../redux/actions';
+import { nextPlayer, waitingPlayers } from '../redux/actions';
 import {
   getRoom,
   getGame,
@@ -15,18 +16,22 @@ import {
 import SummaryModal from './SummaryModal';
 
 const Dice = props => {
-  const [showModal, setShowModal] = useState(false);
+  const [showSummary, setShowSummary] = useState(false);
 
-  const { nextPlayer, playerInTurn } = props;
+  const { nextPlayer, waitingPlayers, players, playerInTurn } = props;
   const { roomId, username } = props.room;
-  const { gameOn, round, turn, rolls } = props.game;
+  const { gameOn, round, turn, rolls, waiting } = props.game;
   const { dice } = props.dice;
 
   const ws = useContext(WebSocketContext);
+  const user = _.find(players, { name: username });
+  let userId;
+  if (user) userId = user.id;
 
   useEffect(() => {
     if (dice.every(die => die.ready)) {
-      setShowModal(true);
+      waitingPlayers();
+      setShowSummary(true);
     }
   }, [dice]);
 
@@ -35,7 +40,8 @@ const Dice = props => {
   };
 
   const handleTurnEnd = () => {
-    setShowModal(false);
+    setShowSummary(false);
+    ws.playerReady(roomId, userId);
     nextPlayer();
   };
 
@@ -69,7 +75,10 @@ const Dice = props => {
         <Button
           variant='primary'
           disabled={
-            !gameOn || playerInTurn.name !== username || round > 6 || showModal
+            !gameOn ||
+            playerInTurn.name !== username ||
+            round > 6 ||
+            showSummary
           }
           onClick={rollDice}
         >
@@ -77,13 +86,20 @@ const Dice = props => {
         </Button>
       </div>
       <SummaryModal
-        show={showModal}
+        show={showSummary}
         handleClose={handleTurnEnd}
         title={`Round ${round}`}
         buttonText={'Next Player'}
       >
         <p>Player: {playerInTurn.name}</p>
         <p>Rolls: {rolls}</p>
+      </SummaryModal>
+      <SummaryModal
+        show={!showSummary && waiting.length !== 0}
+        title={`Waiting for ....`}
+        showButton={false}
+      >
+        {waiting.map(value => `${_.find(players, { id: value }).name}, `)}
       </SummaryModal>
     </div>
   );
@@ -98,6 +114,7 @@ export default connect(
     dice: getDice(state)
   }),
   {
-    nextPlayer
+    nextPlayer,
+    waitingPlayers
   }
 )(Dice);
