@@ -13,7 +13,7 @@ import Dice from './Dice';
 import SummaryModal from './SummaryModal';
 
 const Round = props => {
-  const [showModal, setShowModal] = useState(false);
+  const [showSummary, setShowSummary] = useState(false);
   const { newGame, nextRound, players, playerInTurn } = props;
   const { roomId } = props.room;
   const { gameOn, round, turn, rolls } = props.game;
@@ -22,7 +22,7 @@ const Round = props => {
 
   useEffect(() => {
     if (gameOn && turn > players.length) {
-      setShowModal(true);
+      setShowSummary(true);
     }
   }, [turn]);
 
@@ -32,7 +32,7 @@ const Round = props => {
   };
 
   const handleStartNextRound = () => {
-    setShowModal(false);
+    setShowSummary(false);
     nextRound();
   };
 
@@ -56,9 +56,9 @@ const Round = props => {
         {gameOn && turn <= players.length ? playerInTurn.name : ''}
       </div>
       <div>Rolls: {rolls}</div>
-      <Dice showRoundModal={showModal} />
+      <Dice showRoundModal={showSummary} />
       <SummaryModal
-        show={showModal}
+        show={showSummary}
         handleClose={handleStartNextRound}
         title={`Round ${round} summary`}
         buttonText={'Next Round'}
