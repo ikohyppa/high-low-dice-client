@@ -53,3 +53,18 @@
   left: 25%;
   top: 10%;
 }
+
+.low {
+  font-weight: bold;
+  color: red;
+}
+
+.high {
+  font-weight: bold;
+  color: blue
+}
+
+.lower-or-higher {
+  font-weight: bold;
+  color: green;
+}
