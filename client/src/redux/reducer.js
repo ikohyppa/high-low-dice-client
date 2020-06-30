@@ -1,8 +1,10 @@
+import _ from 'lodash';
 import {
   CREATE_ROOM_SUCCESS,
   JOIN_ROOM_SUCCESS,
   ADD_PLAYER,
   ADD_NEW_PLAYER,
+  RESET_PLAYER_ROLLS,
   NEW_GAME,
   NEXT_ROUND,
   NEXT_PLAYER,
@@ -110,6 +112,24 @@ export default function (state = initialState, action) {
         return state;
       }
     }
+    case RESET_PLAYER_ROLLS: {
+      const { roomId } = action.payload;
+      if (roomId === state.room.roomId) {
+        let byIdsTemp = state.players.byIds;
+        for (let id = 1; id <= state.players.allIds.length; id++) {
+          byIdsTemp[id].rolls = [];
+        }
+        return {
+          ...state,
+          players: {
+            ...state.players,
+            byIds: byIdsTemp
+          }
+        };
+      } else {
+        return state;
+      }
+    }
     case NEW_GAME: {
       const { roomId } = action.payload;
       if (roomId === state.room.roomId) {
@@ -120,7 +140,9 @@ export default function (state = initialState, action) {
             gameOn: true,
             round: 1,
             turn: 1,
-            rolls: 0
+            rolls: 0,
+            roundLows: [0, 0, 0, 0, 0, 0],
+            roundHighs: [0, 0, 0, 0, 0, 0]
           }
         };
       } else {

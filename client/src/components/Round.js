@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { connect } from 'react-redux';
 import { WebSocketContext } from '../connection/webSocket';
 import { Button } from 'react-bootstrap';
+import _ from 'lodash';
 import {
   getRoom,
   getPlayers,
@@ -14,9 +15,9 @@ import SummaryModal from './SummaryModal';
 
 const Round = props => {
   const [showSummary, setShowSummary] = useState(false);
-  const { newGame, nextRound, players, playerInTurn } = props;
+  const { nextRound, players, playerInTurn } = props;
   const { roomId } = props.room;
-  const { gameOn, round, turn, rolls } = props.game;
+  const { gameOn, round, turn, rolls, waiting } = props.game;
 
   const ws = useContext(WebSocketContext);
 
@@ -27,7 +28,6 @@ const Round = props => {
   }, [turn]);
 
   const handleNewGame = () => {
-    newGame(roomId);
     ws.startNewGame(roomId);
   };
 
@@ -77,10 +77,11 @@ const Round = props => {
         </table>
       </SummaryModal>
       <SummaryModal
-        show={round > 6}
+        show={round > 5}
         handleClose={handleNewGame}
         title={`Game summary`}
         buttonText={'New Game'}
+        showButton={_.isEmpty(waiting)}
       >
         <table>
           <tbody>
@@ -106,5 +107,5 @@ export default connect(
     players: getPlayers(state),
     playerInTurn: getPlayerById(state, state.game.turn)
   }),
-  { newGame, nextRound }
+  { nextRound }
 )(Round);

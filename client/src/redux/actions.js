@@ -10,6 +10,7 @@ import {
   JOIN_ROOM_ERROR,
   ADD_PLAYER,
   ADD_NEW_PLAYER,
+  RESET_PLAYER_ROLLS,
   NEW_GAME,
   NEXT_ROUND,
   NEXT_PLAYER,
@@ -113,6 +114,13 @@ export const addNewPlayer = (roomId, user) => ({
   payload: {
     roomId: roomId,
     name: user
+  }
+});
+
+export const resetPlayerRolls = roomId => ({
+  type: RESET_PLAYER_ROLLS,
+  payload: {
+    roomId: roomId
   }
 });
 
