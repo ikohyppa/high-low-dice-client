@@ -9,7 +9,7 @@ import {
   getGame,
   getPlayerById
 } from '../redux/selectors';
-import { newGame, nextRound } from '../redux/actions';
+import { nextRound } from '../redux/actions';
 import Dice from './Dice';
 import SummaryModal from './SummaryModal';
 
