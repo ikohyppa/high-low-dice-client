@@ -4,8 +4,9 @@ import { WS_BASE } from './config';
 import { useDispatch } from 'react-redux';
 import {
   addNewPlayer,
-  resetPlayerRolls,
+  resetPlayerStats,
   newGame,
+  collectRoundFees,
   diceRolled,
   playerIsReady
 } from '../redux/actions';
@@ -56,8 +57,9 @@ export default ({ children }) => {
 
     socket.on('event://get-newgame', msg => {
       const { roomId } = msg;
-      dispatch(resetPlayerRolls(roomId));
+      dispatch(resetPlayerStats(roomId));
       dispatch(newGame(roomId));
+      dispatch(collectRoundFees(roomId));
     });
 
     socket.on('event://get-rolldice', msg => {
@@ -73,7 +75,6 @@ export default ({ children }) => {
     ws = {
       socket: socket,
       newPlayer,
-      resetPlayerRolls,
       startNewGame,
       rollDice,
       playerReady

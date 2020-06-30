@@ -4,7 +4,8 @@ import {
   JOIN_ROOM_SUCCESS,
   ADD_PLAYER,
   ADD_NEW_PLAYER,
-  RESET_PLAYER_ROLLS,
+  RESET_PLAYER_STATS,
+  COLLECT_ROUND_FEES,
   NEW_GAME,
   NEXT_ROUND,
   NEXT_PLAYER,
@@ -112,12 +113,31 @@ export default function (state = initialState, action) {
         return state;
       }
     }
-    case RESET_PLAYER_ROLLS: {
+    case RESET_PLAYER_STATS: {
       const { roomId } = action.payload;
       if (roomId === state.room.roomId) {
         let byIdsTemp = state.players.byIds;
         for (let id = 1; id <= state.players.allIds.length; id++) {
           byIdsTemp[id].rolls = [];
+          byIdsTemp[id].score = 0;
+        }
+        return {
+          ...state,
+          players: {
+            ...state.players,
+            byIds: byIdsTemp
+          }
+        };
+      } else {
+        return state;
+      }
+    }
+    case COLLECT_ROUND_FEES: {
+      const { roomId } = action.payload;
+      if (roomId === state.room.roomId) {
+        let byIdsTemp = state.players.byIds;
+        for (let id = 1; id <= state.players.allIds.length; id++) {
+          byIdsTemp[id].score = state.players.byIds[id].score - 1;
         }
         return {
           ...state,

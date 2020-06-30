@@ -9,13 +9,13 @@ import {
   getGame,
   getPlayerById
 } from '../redux/selectors';
-import { nextRound } from '../redux/actions';
+import { nextRound, collectRoundFees } from '../redux/actions';
 import Dice from './Dice';
 import SummaryModal from './SummaryModal';
 
 const Round = props => {
   const [showSummary, setShowSummary] = useState(false);
-  const { nextRound, players, playerInTurn } = props;
+  const { nextRound, collectRoundFees, players, playerInTurn } = props;
   const { roomId } = props.room;
   const { gameOn, round, turn, rolls, waiting } = props.game;
 
@@ -34,6 +34,9 @@ const Round = props => {
   const handleStartNextRound = () => {
     setShowSummary(false);
     nextRound();
+    if (round < 6) {
+      collectRoundFees(roomId);
+    }
   };
 
   return (
@@ -77,7 +80,7 @@ const Round = props => {
         </table>
       </SummaryModal>
       <SummaryModal
-        show={round > 5}
+        show={round > 6}
         handleClose={handleNewGame}
         title={`Game summary`}
         buttonText={'New Game'}
@@ -107,5 +110,5 @@ export default connect(
     players: getPlayers(state),
     playerInTurn: getPlayerById(state, state.game.turn)
   }),
-  { nextRound }
+  { nextRound, collectRoundFees }
 )(Round);
