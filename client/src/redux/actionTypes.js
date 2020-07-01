@@ -11,6 +11,7 @@ export const ADD_PLAYER = 'ADD_PLAYER';
 export const ADD_NEW_PLAYER = 'ADD_NEW_PLAYER';
 export const RESET_PLAYER_STATS = 'RESET_PLAYER_STATS';
 export const COLLECT_ROUND_FEES = 'COLLECT_ROUND_FEES';
+export const PAY_ROUND_WINNINGS = 'PAY_ROUND_WINNINGS';
 
 // Game state
 export const NEW_GAME = 'NEW_GAME';

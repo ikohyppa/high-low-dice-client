@@ -7,15 +7,33 @@ import {
   getRoom,
   getPlayers,
   getGame,
-  getPlayerById
+  getPlayerById,
+  getRoundLow,
+  getRoundHigh,
+  getRoundLowWinnings,
+  getRoundHighWinnings
 } from '../redux/selectors';
-import { nextRound, collectRoundFees } from '../redux/actions';
+import {
+  nextRound,
+  collectRoundFees,
+  payRoundWinnings
+} from '../redux/actions';
 import Dice from './Dice';
 import SummaryModal from './SummaryModal';
 
 const Round = props => {
   const [showSummary, setShowSummary] = useState(false);
-  const { nextRound, collectRoundFees, players, playerInTurn } = props;
+  const {
+    nextRound,
+    collectRoundFees,
+    payRoundWinnings,
+    players,
+    playerInTurn,
+    roundLow,
+    roundHigh,
+    roundLowWinnings,
+    roundHighWinnings
+  } = props;
   const { roomId } = props.room;
   const { gameOn, round, turn, rolls, waiting } = props.game;
 
@@ -33,10 +51,11 @@ const Round = props => {
 
   const handleStartNextRound = () => {
     setShowSummary(false);
-    nextRound();
+    payRoundWinnings(roundLow, roundHigh, roundLowWinnings, roundHighWinnings);
     if (round < 6) {
       collectRoundFees(roomId);
     }
+    nextRound();
   };
 
   return (
@@ -108,7 +127,11 @@ export default connect(
     room: getRoom(state),
     game: getGame(state),
     players: getPlayers(state),
-    playerInTurn: getPlayerById(state, state.game.turn)
+    playerInTurn: getPlayerById(state, state.game.turn),
+    roundLow: getRoundLow(state, state.game.round),
+    roundHigh: getRoundHigh(state, state.game.round),
+    roundLowWinnings: getRoundLowWinnings(state, state.game.round),
+    roundHighWinnings: getRoundHighWinnings(state, state.game.round)
   }),
-  { nextRound, collectRoundFees }
+  { nextRound, collectRoundFees, payRoundWinnings }
 )(Round);

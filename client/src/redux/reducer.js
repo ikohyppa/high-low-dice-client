@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import {
   CREATE_ROOM_SUCCESS,
   JOIN_ROOM_SUCCESS,
@@ -6,6 +5,7 @@ import {
   ADD_NEW_PLAYER,
   RESET_PLAYER_STATS,
   COLLECT_ROUND_FEES,
+  PAY_ROUND_WINNINGS,
   NEW_GAME,
   NEXT_ROUND,
   NEXT_PLAYER,
@@ -149,6 +149,25 @@ export default function (state = initialState, action) {
       } else {
         return state;
       }
+    }
+    case PAY_ROUND_WINNINGS: {
+      const { low, high, lowWinnings, highWinnings } = action.payload;
+      let byIdsTemp = state.players.byIds;
+      for (let id = 1; id <= state.players.allIds.length; id++) {
+        if (byIdsTemp[id].rolls[state.game.round - 1] === low) {
+          byIdsTemp[id].score = state.players.byIds[id].score + lowWinnings;
+        }
+        if (byIdsTemp[id].rolls[state.game.round - 1] === high) {
+          byIdsTemp[id].score = state.players.byIds[id].score + highWinnings;
+        }
+      }
+      return {
+        ...state,
+        players: {
+          ...state.players,
+          byIds: byIdsTemp
+        }
+      };
     }
     case NEW_GAME: {
       const { roomId } = action.payload;

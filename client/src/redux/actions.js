@@ -12,6 +12,7 @@ import {
   ADD_NEW_PLAYER,
   RESET_PLAYER_STATS,
   COLLECT_ROUND_FEES,
+  PAY_ROUND_WINNINGS,
   NEW_GAME,
   NEXT_ROUND,
   NEXT_PLAYER,
@@ -129,6 +130,21 @@ export const collectRoundFees = roomId => ({
   type: COLLECT_ROUND_FEES,
   payload: {
     roomId: roomId
+  }
+});
+
+export const payRoundWinnings = (
+  roundLow,
+  roundHigh,
+  roundLowWinnings,
+  roundHighWinnings
+) => ({
+  type: PAY_ROUND_WINNINGS,
+  payload: {
+    low: roundLow,
+    high: roundHigh,
+    lowWinnings: roundLowWinnings,
+    highWinnings: roundHighWinnings
   }
 });
 
