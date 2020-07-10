@@ -35,14 +35,16 @@ export function createRoomRequest() {
 export function createRoomSuccess(payload) {
   return {
     type: CREATE_ROOM_SUCCESS,
-    payload
+    data: payload,
+    error: null
   };
 }
 
 export function createRoomError(error) {
   return {
     type: CREATE_ROOM_ERROR,
-    error
+    data: null,
+    error: error
   };
 }
 
@@ -50,14 +52,18 @@ export function createRoom(roomName, username) {
   return async function (dispatch) {
     dispatch(createRoomRequest());
     try {
-      const response = await axios.get(
-        `${API_BASE}/room?name=${roomName}&user=${username}`
-      );
-      const playerlist = response.data.playerlist;
-      dispatch(createRoomSuccess(response.data));
-      playerlist.forEach(player => {
-        dispatch(addPlayer(player));
-      });
+      const response = (
+        await axios.get(`${API_BASE}/room?name=${roomName}&user=${username}`)
+      ).data;
+      if (response.status === 'ok') {
+        const playerlist = response.data.playerlist;
+        dispatch(createRoomSuccess(response.data));
+        playerlist.forEach(player => {
+          dispatch(addPlayer(player));
+        });
+      } else {
+        dispatch(createRoomError(response.error));
+      }
     } catch (error) {
       dispatch(createRoomError(error));
     }
@@ -88,14 +94,18 @@ export function joinRoom(roomId, username) {
   return async function (dispatch) {
     dispatch(joinRoomRequest());
     try {
-      const response = await axios.get(
-        `${API_BASE}/room/${roomId}?user=${username}`
-      );
-      const playerlist = response.data.playerlist;
-      dispatch(joinRoomSuccess(response.data));
-      playerlist.forEach(player => {
-        dispatch(addPlayer(player));
-      });
+      const response = (
+        await axios.get(`${API_BASE}/room/${roomId}?user=${username}`)
+      ).data;
+      if (response.status === 'ok') {
+        const playerlist = response.data.playerlist;
+        dispatch(createRoomSuccess(response.data));
+        playerlist.forEach(player => {
+          dispatch(addPlayer(player));
+        });
+      } else {
+        dispatch(createRoomError(response.error));
+      }
     } catch (error) {
       dispatch(joinRoomError(error));
     }

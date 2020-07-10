@@ -42,13 +42,14 @@ const initialState = {
       { value: null, ready: false },
       { value: null, ready: false }
     ]
-  }
+  },
+  error: null
 };
 
 export default function (state = initialState, action) {
   switch (action.type) {
     case CREATE_ROOM_SUCCESS: {
-      const { id, name, user } = action.payload;
+      const { id, name, user } = action.data;
       return {
         ...state,
         room: {
@@ -302,7 +303,12 @@ export default function (state = initialState, action) {
         return state;
       }
     }
-    default:
+    default: {
+      const { error } = action;
+      if (error) {
+        return  {...state, error: error};
+      }
       return state;
+    }
   }
 }
