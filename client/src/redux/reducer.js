@@ -14,7 +14,8 @@ import {
   UPDATE_ROUND_HIGH,
   WAITING_PLAYERS,
   PLAYER_READY,
-  ROLL_DICE
+  ROLL_DICE,
+  HIDE_ERROR
 } from './actionTypes';
 
 const initialState = {
@@ -43,7 +44,10 @@ const initialState = {
       { value: null, ready: false }
     ]
   },
-  error: null
+  error: {
+    error: null,
+    isOpen: false
+  }
 };
 
 export default function (state = initialState, action) {
@@ -306,7 +310,9 @@ export default function (state = initialState, action) {
     default: {
       const { error } = action;
       if (error) {
-        return  {...state, error: error};
+        return { ...state, error: { error: error, isOpen: true } };
+      } else if (action.type === HIDE_ERROR) {
+        return { ...state, error: { error: null, isOpen: false } };
       }
       return state;
     }

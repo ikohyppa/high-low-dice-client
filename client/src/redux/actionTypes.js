@@ -25,3 +25,6 @@ export const PLAYER_READY = 'PLAYER_READY';
 
 // Dice state
 export const ROLL_DICE = 'ROLL_DICE';
+
+// Error state
+export const HIDE_ERROR = "HIDE_ERROR";

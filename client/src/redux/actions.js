@@ -21,7 +21,8 @@ import {
   UPDATE_ROUND_HIGH,
   WAITING_PLAYERS,
   PLAYER_READY,
-  ROLL_DICE
+  ROLL_DICE,
+  HIDE_ERROR
 } from './actionTypes';
 
 // ***** room state actions *****
@@ -79,14 +80,16 @@ export function joinRoomRequest() {
 export function joinRoomSuccess(payload) {
   return {
     type: JOIN_ROOM_SUCCESS,
-    payload
+    data: payload,
+    error: null
   };
 }
 
 export function joinRoomError(error) {
   return {
     type: JOIN_ROOM_ERROR,
-    error
+    data: null,
+    error: error
   };
 }
 
@@ -99,12 +102,12 @@ export function joinRoom(roomId, username) {
       ).data;
       if (response.status === 'ok') {
         const playerlist = response.data.playerlist;
-        dispatch(createRoomSuccess(response.data));
+        dispatch(joinRoomSuccess(response.data));
         playerlist.forEach(player => {
           dispatch(addPlayer(player));
         });
       } else {
-        dispatch(createRoomError(response.error));
+        dispatch(joinRoomError(response.error));
       }
     } catch (error) {
       dispatch(joinRoomError(error));
@@ -212,4 +215,10 @@ export const diceRolled = (roomId, dice, round, id, rolls) => ({
     id: id,
     rolls: rolls
   }
+});
+
+// ***** error state actions *****
+
+export const hideError = () => ({
+  type: HIDE_ERROR
 });
