@@ -65,7 +65,7 @@ export default function (state = initialState, action) {
       };
     }
     case JOIN_ROOM_SUCCESS: {
-      const { id, name, user } = action.payload;
+      const { id, name, user } = action.data;
       return {
         ...state,
         room: {
