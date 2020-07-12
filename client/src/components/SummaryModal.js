@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Modal } from 'react-bootstrap';
-import { connect } from 'react-redux';
-import { getGame, getPlayers } from '../redux/selectors';
+//import { connect } from 'react-redux';
+//import { getGame, getPlayers } from '../redux/selectors';
 import '../App.css';
 
 const SummaryModal = props => {
@@ -31,7 +31,7 @@ const SummaryModal = props => {
   );
 };
 
-export default connect(
+export default /*connect(
   state => ({ game: getGame(state), players: getPlayers(state) }),
   null
-)(SummaryModal);
+)(*/SummaryModal;//);
