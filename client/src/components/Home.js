@@ -5,6 +5,7 @@ import { WebSocketContext } from '../connection/webSocket';
 import Room from './Room';
 import Players from './Players';
 import Round from './Round';
+import ErrorNotification from './ErrorNotification';
 
 export default function HomeComponent() {
   const [username, setUserName] = useState('');
@@ -63,6 +64,7 @@ export default function HomeComponent() {
               Join
             </button>
           </div>
+          <div><ErrorNotification /></div>
         </div>
       )}
 
