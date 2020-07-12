@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import {
   CREATE_ROOM_SUCCESS,
   JOIN_ROOM_SUCCESS,
@@ -24,7 +25,7 @@ const initialState = {
     roomName: null,
     username: null
   },
-  players: { allIds: [], byIds: {} },
+  players: { allIds: [], allNames: [], byIds: {} },
   game: {
     gameOn: false,
     round: null,
@@ -84,6 +85,7 @@ export default function (state = initialState, action) {
         players: {
           ...state.players,
           allIds: [...state.players.allIds, id],
+          allNames: [...state.players.allNames, name],
           byIds: {
             ...state.players.byIds,
             [id]: {
@@ -97,13 +99,14 @@ export default function (state = initialState, action) {
     }
     case ADD_NEW_PLAYER: {
       const { roomId, name } = action.payload;
-      if (roomId === state.room.roomId) {
+      if (roomId === state.room.roomId && !_.includes(state.players.allNames, name)) {
         let id = state.players.allIds.length + 1;
         return {
           ...state,
           players: {
             ...state.players,
             allIds: [...state.players.allIds, id],
+            allNames: [...state.players.allNames, name],
             byIds: {
               ...state.players.byIds,
               [id]: {
