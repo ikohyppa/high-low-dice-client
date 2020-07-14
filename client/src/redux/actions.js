@@ -27,29 +27,23 @@ import {
 
 // ***** room state actions *****
 
-export function createRoomRequest() {
-  return {
-    type: CREATE_ROOM_REQUEST
-  };
-}
+export const createRoomRequest = () => ({
+  type: CREATE_ROOM_REQUEST
+});
 
-export function createRoomSuccess(payload) {
-  return {
-    type: CREATE_ROOM_SUCCESS,
-    data: payload,
-    error: null
-  };
-}
+export const createRoomSuccess = payload => ({
+  type: CREATE_ROOM_SUCCESS,
+  data: payload,
+  error: null
+});
 
-export function createRoomError(error) {
-  return {
-    type: CREATE_ROOM_ERROR,
-    data: null,
-    error: error
-  };
-}
+export const createRoomError = error => ({
+  type: CREATE_ROOM_ERROR,
+  data: null,
+  error: error
+});
 
-export function createRoom(roomName, username) {
+export const createRoom = (roomName, username) => {
   return async function (dispatch) {
     dispatch(createRoomRequest());
     try {
@@ -69,31 +63,25 @@ export function createRoom(roomName, username) {
       dispatch(createRoomError(error));
     }
   };
-}
+};
 
-export function joinRoomRequest() {
-  return {
-    type: JOIN_ROOM_REQUEST
-  };
-}
+export const joinRoomRequest = () => ({
+  type: JOIN_ROOM_REQUEST
+});
 
-export function joinRoomSuccess(payload) {
-  return {
-    type: JOIN_ROOM_SUCCESS,
-    data: payload,
-    error: null
-  };
-}
+export const joinRoomSuccess = payload => ({
+  type: JOIN_ROOM_SUCCESS,
+  data: payload,
+  error: null
+});
 
-export function joinRoomError(error) {
-  return {
-    type: JOIN_ROOM_ERROR,
-    data: null,
-    error: error
-  };
-}
+export const joinRoomError = error => ({
+  type: JOIN_ROOM_ERROR,
+  data: null,
+  error: error
+});
 
-export function joinRoom(roomId, username) {
+export const joinRoom = (roomId, username) => {
   return async function (dispatch) {
     dispatch(joinRoomRequest());
     try {
@@ -113,7 +101,7 @@ export function joinRoom(roomId, username) {
       dispatch(joinRoomError(error));
     }
   };
-}
+};
 
 // ***** players state actions *****
 
