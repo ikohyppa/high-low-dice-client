@@ -112,25 +112,25 @@ export const addPlayer = user => ({
   }
 });
 
-export const addNewPlayer = (roomId, user) => ({
+export const addNewPlayer = (roomName, playerName) => ({
   type: ADD_NEW_PLAYER,
   payload: {
-    roomId: roomId,
-    name: user
+    roomName: roomName,
+    name: playerName
   }
 });
 
-export const resetPlayerStats = roomId => ({
+export const resetPlayerStats = roomName => ({
   type: RESET_PLAYER_STATS,
   payload: {
-    roomId: roomId
+    roomName: roomName
   }
 });
 
-export const collectRoundFees = roomId => ({
+export const collectRoundFees = roomName => ({
   type: COLLECT_ROUND_FEES,
   payload: {
-    roomId: roomId
+    roomName: roomName
   }
 });
 
@@ -151,10 +151,10 @@ export const payRoundWinnings = (
 
 // ***** game state actions *****
 
-export const newGame = roomId => ({
+export const newGame = roomName => ({
   type: NEW_GAME,
   payload: {
-    roomId: roomId
+    roomName: roomName
   }
 });
 
@@ -184,20 +184,20 @@ export const waitingPlayers = () => ({
   type: WAITING_PLAYERS
 });
 
-export const playerIsReady = (roomId, userId) => ({
+export const playerIsReady = (roomName, playerId) => ({
   type: PLAYER_READY,
   payload: {
-    roomId: roomId,
-    playerId: userId
+    roomName: roomName,
+    playerId: playerId
   }
 });
 
 // ***** dice state actions *****
 
-export const diceRolled = (roomId, dice, round, id, rolls) => ({
+export const diceRolled = (roomName, dice, round, id, rolls) => ({
   type: ROLL_DICE,
   payload: {
-    roomId: roomId,
+    roomName: roomName,
     dice: dice,
     round: round,
     id: id,

@@ -98,8 +98,8 @@ export default function (state = initialState, action) {
       };
     }
     case ADD_NEW_PLAYER: {
-      const { roomId, name } = action.payload;
-      if (roomId === state.room.roomId && !_.includes(state.players.allNames, name)) {
+      const { roomName, name } = action.payload;
+      if (roomName === state.room.roomName && !_.includes(state.players.allNames, name)) {
         let id = state.players.allIds.length + 1;
         return {
           ...state,
@@ -122,8 +122,8 @@ export default function (state = initialState, action) {
       }
     }
     case RESET_PLAYER_STATS: {
-      const { roomId } = action.payload;
-      if (roomId === state.room.roomId) {
+      const { roomName } = action.payload;
+      if (roomName === state.room.roomName) {
         let byIdsTemp = state.players.byIds;
         for (let id = 1; id <= state.players.allIds.length; id++) {
           byIdsTemp[id].rolls = [];
@@ -141,8 +141,8 @@ export default function (state = initialState, action) {
       }
     }
     case COLLECT_ROUND_FEES: {
-      const { roomId } = action.payload;
-      if (roomId === state.room.roomId) {
+      const { roomName } = action.payload;
+      if (roomName === state.room.roomName) {
         let byIdsTemp = state.players.byIds;
         for (let id = 1; id <= state.players.allIds.length; id++) {
           byIdsTemp[id].score = state.players.byIds[id].score - 1;
@@ -178,8 +178,8 @@ export default function (state = initialState, action) {
       };
     }
     case NEW_GAME: {
-      const { roomId } = action.payload;
-      if (roomId === state.room.roomId) {
+      const { roomName } = action.payload;
+      if (roomName === state.room.roomName) {
         return {
           ...state,
           game: {
@@ -262,8 +262,8 @@ export default function (state = initialState, action) {
       };
     }
     case PLAYER_READY: {
-      const { roomId, playerId } = action.payload;
-      if (roomId === state.room.roomId) {
+      const { roomName, playerId } = action.payload;
+      if (roomName === state.room.roomName) {
         return {
           ...state,
           game: {
@@ -276,8 +276,8 @@ export default function (state = initialState, action) {
       }
     }
     case ROLL_DICE: {
-      const { roomId, dice, round, id, rolls } = action.payload;
-      if (roomId === state.room.roomId) {
+      const { roomName, dice, round, id, rolls } = action.payload;
+      if (roomName === state.room.roomName) {
         let currentDice = state.dice.dice;
         let tempDice = currentDice.map((die, index) => {
           return die.ready === false

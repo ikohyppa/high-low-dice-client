@@ -24,7 +24,7 @@ export default ({ children }) => {
   const newPlayer = (roomId, username) => {
     const payload = {
       roomId: roomId,
-      user: username
+      playerName: username
     };
     socket.emit('event://send-newplayer', JSON.stringify(payload));
   };
@@ -42,7 +42,7 @@ export default ({ children }) => {
   const playerReady = (roomId, userId) => {
     const payload = {
       roomId: roomId,
-      userId: userId
+      playerId: userId
     };
     socket.emit('event://send-playerready', JSON.stringify(payload));
   };
@@ -51,25 +51,25 @@ export default ({ children }) => {
     socket = io.connect(WS_BASE);
 
     socket.on('event://get-newplayer', msg => {
-      const { roomId, user } = msg;
-      dispatch(addNewPlayer(roomId, user));
+      const { roomName, playerName } = msg;
+      dispatch(addNewPlayer(roomName, playerName));
     });
 
     socket.on('event://get-newgame', msg => {
-      const { roomId } = msg;
-      dispatch(resetPlayerStats(roomId));
-      dispatch(newGame(roomId));
-      dispatch(collectRoundFees(roomId));
+      const { roomName } = msg;
+      dispatch(resetPlayerStats(roomName));
+      dispatch(newGame(roomName));
+      dispatch(collectRoundFees(roomName));
     });
 
     socket.on('event://get-rolldice', msg => {
-      const { roomId, dice, round, id, rolls } = msg;
-      dispatch(diceRolled(roomId, dice, round, id, rolls));
+      const { roomName, dice, round, id, rolls } = msg;
+      dispatch(diceRolled(roomName, dice, round, id, rolls));
     });
 
     socket.on('event://get-playerready', msg => {
-      const { roomId, userId } = msg;
-      dispatch(playerIsReady(roomId, userId));
+      const { roomName, playerId } = msg;
+      dispatch(playerIsReady(roomName, playerId));
     });
 
     ws = {
