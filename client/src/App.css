@@ -6,8 +6,34 @@ body {
   background-position: center;
 }
 
+.topbar {
+  background-color: #397d2f;
+  font-size: 0.7em;
+  align-items: center;
+  padding: 0.5em 0.5em;
+}
+
+#title {
+  float: left;
+  font-weight: bold;
+  text-align: center;
+}
+#player {
+  float: left;
+  font-weight: bold;
+  text-align: center;
+}
+#room {
+  padding-left: 20px;
+  float: left;
+}
+#roomid {
+  padding-left: 20px;
+  float: left;
+}
+
 .home {
-  background-color:red;
+  background-color: red;
   padding: 1%;
   margin: 1%;
   width: auto;
@@ -37,7 +63,7 @@ body {
 
 .high {
   font-weight: bold;
-  color: blue
+  color: blue;
 }
 
 .lower-or-higher {
@@ -52,11 +78,4 @@ body {
   align-items: flex-start;
   align-content: flex-start;
   /* background-color: blue; */
-}
-
-.home {
-  background-color:red;
-  padding: 1%;
-  margin: 1%;
-  width: auto;
 }
