@@ -11,35 +11,78 @@ body {
   font-size: 0.7em;
   align-items: center;
   padding: 0.5em 0.5em;
+  font-weight: bold;
 }
 
 #title {
   float: left;
-  font-weight: bold;
   text-align: center;
 }
 #player {
   float: left;
-  font-weight: bold;
   text-align: center;
 }
 #room {
   padding-left: 20px;
   float: left;
 }
-#roomid {
-  padding-left: 20px;
-  float: left;
+
+#info {
+  float: right;
+  align-self: center;
+  margin-right: 2em;
 }
 
-.home {
-  background-color: red;
-  padding: 1%;
-  margin: 1%;
-  width: auto;
+#icon {
+  margin-left: 1.5em;
 }
 
-.modal {
+
+.loginContainer {
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-content: flex-start;
+  font-size: 0.7em;
+  font-weight: bold;
+  padding: 0.5em 0.5em;
+  margin: 0.5em 0.5em;
+  width: 20em;
+}
+
+.loginSet {
+  display: inline-block;
+  align-items: center;
+  width: 100%;
+  margin-left: 1em;
+  margin-right: 0em;
+  padding-top: 0.35em;
+  padding-bottom: 0.625em;
+  padding-left: 0.75em;
+  padding-right: 0.75em;
+  border: solid #397d2f;
+  border-width: 2px;
+  border-radius: 0.5em;
+}
+
+.loginGroup {
+  padding-top: 0.3em;
+}
+
+.aling-buttons {
+  display: flex;
+  align-items: center;
+}
+
+.loginButton {
+  font-size: 0.8em;
+  font-weight: bold;
+  width: 25% !important;
+  padding: 0.4em;
+  margin-left: 0.1em;
+}
+
+.modal1 {
   position: fixed;
   z-index: 1500;
   background-color: white;
@@ -54,6 +97,15 @@ body {
   padding-bottom: 1px;
   left: 25%;
   top: 10%;
+}
+
+.infoModal {
+  background-color: #397d2f;
+  border: 3px solid #397d2f;
+  border-radius: 0.7em;
+  box-shadow: 3px 3px 3px black;  
+  top: 10%;
+  font-size: 0.7em;
 }
 
 .low {
