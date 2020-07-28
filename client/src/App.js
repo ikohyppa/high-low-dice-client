@@ -3,19 +3,19 @@ import { Provider } from 'react-redux';
 import store from './redux/store';
 import WebSocketProvider from './connection/webSocket';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Home from './components/Home';
-import TopBar from './components/TopBar';
+
+import Main from './components/Main';
+
 import './App.css';
 
-function App() {
+const App = () => {
   return (
     <Provider store={store}>
       <WebSocketProvider>
-        <TopBar />
-        <Home />
+        <Main />
       </WebSocketProvider>
     </Provider>
   );
-}
+};
 
 export default App;

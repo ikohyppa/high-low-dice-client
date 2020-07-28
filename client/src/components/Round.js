@@ -59,7 +59,7 @@ const Round = props => {
   };
 
   return (
-    <div>
+    <div className='flex-container'>
       <div>
         {!gameOn && (
           <Button
