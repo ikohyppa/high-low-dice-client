@@ -3,10 +3,11 @@ import { useDispatch } from 'react-redux';
 import { createRoom, joinRoom } from '../redux/actions';
 import { WebSocketContext } from '../connection/webSocket';
 import Container from 'react-bootstrap/Container';
-import Button from 'react-bootstrap/Button';
+import { BsInfoCircle } from 'react-icons/bs';
 
 import { HLDButton } from './Buttons';
 import ErrorNotification from './ErrorNotification';
+import { IconWithTooltip } from './IconWithTooltip';
 
 const Login = () => {
   const [username, setUserName] = useState('');
@@ -37,7 +38,17 @@ const Login = () => {
             />
           </div>
           <div className='loginGroup'>
-            <span>Create a new room</span>
+            <span>
+              Create a new room
+              <IconWithTooltip
+                tooltip='...and invite players by sending roomId'
+                placement='right'
+                size='1em'
+                marginLeft='0.5em'
+              >
+                <BsInfoCircle />
+              </IconWithTooltip>
+            </span>
             <div className='aling-buttons'>
               <input
                 type='text'
@@ -54,7 +65,17 @@ const Login = () => {
             </div>
           </div>
           <div className='loginGroup'>
-            <span>Join an existing room</span>
+            <span>
+              Join an existing room{' '}
+              <IconWithTooltip
+                tooltip='Get a room Id from the creator of the room'
+                placement='right'
+                size='1em'
+                marginRight='0.5em'
+              >
+                <BsInfoCircle />
+              </IconWithTooltip>
+            </span>
             <div className='aling-buttons'>
               <input
                 type='text'

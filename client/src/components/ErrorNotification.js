@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { HIDE_ERROR } from '../redux/actionTypes';
-import NotificationModal from './NotificationModal';
+import InfoModal from './InfoModal';
 
 const ErrorNotification = props => {
   const isOpen = useSelector(state => state.error.isOpen);
@@ -15,16 +15,13 @@ const ErrorNotification = props => {
   return (
     <>
       {isOpen && error && (
-        <div>
-          <NotificationModal
-            show={isOpen}
-            handleClose={handleErrorClose}
-            title={`Error notification`}
-            buttonText={'Close'}
-          >
-            <p>Error: {error}</p>
-          </NotificationModal>
-        </div>
+        <InfoModal
+        title={`Error notification`}
+        show={isOpen}
+        handleClose={handleErrorClose}
+      >
+        <p>Error: {error}</p>
+      </InfoModal>
       )}
     </>
   );

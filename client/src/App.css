@@ -85,9 +85,10 @@ body {
   align-items: center;
 }
 
+/* btn-hld color does not work but when btn-hld exits color can be set in loginbutton*/
 .btn-hld{
+  color: red; 
 }
-
 
 .loginButton {
   font-size: 0.8em;
