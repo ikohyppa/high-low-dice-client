@@ -11,7 +11,6 @@ const Login = () => {
   const [username, setUserName] = useState('');
   const [roomName, setRoomName] = useState('');
   const [roomId, setRoomId] = useState('');
-  const [showInfo, setShowInfo] = useState(false);
 
   const dispatch = useDispatch();
   const ws = useContext(WebSocketContext);
@@ -69,24 +68,6 @@ const Login = () => {
               </Button>
             </div>
           </div>
-          <div className='aling-buttons loginGroup'>
-            <Button
-              className='loginButton'
-              onMouseEnter={() => setShowInfo(true)}
-              onMouseLeave={() => setShowInfo(false)}
-              onMouseDown={e => e.preventDefault()}
-            >
-              INFO
-            </Button>
-          </div>
-          {showInfo && (
-            <span>
-              High-Low-Dice Game.
-              <br />
-              Game has six rounds. On ever round players try to throw the round number with all five dice. Dice which land the correct face up are not rolled again. The aim to use either less or more throws than any other players on a round.
-            </span>
-          )}
-
           <div>
             <ErrorNotification />
           </div>
