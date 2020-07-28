@@ -76,6 +76,29 @@ body {
   border-radius: 0.5em;
 }
 
+.mainContainer {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-content: flex-start;
+  width: 40em;
+  padding: 0.2em 0.2em;
+  margin: 0.5em 0.5em;
+  border: solid #397d2f;
+  border-width: 2px;
+  border-radius: 0.5em;
+  font-size: 0.6em;
+  font-weight: bold;
+}
+
+.hld-table {
+  border-collapse: separate;
+  border-spacing: 0em 0em;
+  background: rgba(57, 125, 47, 0.7);
+  width: 100%;
+}
+
 .loginGroup {
   padding-top: 0.3em;
 }

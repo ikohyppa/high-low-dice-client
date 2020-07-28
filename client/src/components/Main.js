@@ -5,7 +5,6 @@ import TopBar from './TopBar';
 import Login from './Login';
 import Players from './Players';
 import Round from './Round';
-import Dice from './Dice';
 
 const Main = () => {
   const currentRoom = useSelector(state => state.room.roomName);
