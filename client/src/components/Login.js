@@ -5,6 +5,7 @@ import { WebSocketContext } from '../connection/webSocket';
 import Container from 'react-bootstrap/Container';
 import Button from 'react-bootstrap/Button';
 
+import { HLDButton } from './Buttons';
 import ErrorNotification from './ErrorNotification';
 
 const Login = () => {
@@ -15,6 +16,9 @@ const Login = () => {
   const dispatch = useDispatch();
   const ws = useContext(WebSocketContext);
 
+  const createGameRoom = (roomName, username) => {
+    dispatch(createRoom(roomName, username));
+  };
   const joinGameRoom = (roomId, username) => {
     dispatch(joinRoom(roomId, username));
     ws.newPlayer(roomId, username);
@@ -41,13 +45,12 @@ const Login = () => {
                 value={roomName}
                 onChange={e => setRoomName(e.target.value)}
               />
-              <Button
+              <HLDButton
+                title='Create'
                 className='loginButton'
                 disabled={!username || !roomName}
-                onClick={() => dispatch(createRoom(roomName, username))}
-              >
-                Create
-              </Button>
+                handleClick={() => createGameRoom(roomName, username)}
+              />
             </div>
           </div>
           <div className='loginGroup'>
@@ -59,13 +62,12 @@ const Login = () => {
                 value={roomId}
                 onChange={e => setRoomId(e.target.value)}
               />
-              <Button
+              <HLDButton
+                title='Join'
                 className='loginButton'
                 disabled={!username || !roomId}
-                onClick={() => joinGameRoom(roomId, username)}
-              >
-                Join
-              </Button>
+                handleClick={() => joinGameRoom(roomId, username)}
+              />
             </div>
           </div>
           <div>

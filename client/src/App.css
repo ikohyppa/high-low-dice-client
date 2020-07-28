@@ -85,12 +85,17 @@ body {
   align-items: center;
 }
 
+.btn-hld{
+}
+
+
 .loginButton {
   font-size: 0.8em;
   font-weight: bold;
   width: 25% !important;
   padding: 0.4em;
   margin-left: 0.1em;
+  background-color: #397d2f;
 }
 
 .modal1 {
