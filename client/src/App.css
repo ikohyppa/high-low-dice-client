@@ -76,7 +76,7 @@ body {
   border-radius: 0.5em;
 }
 
-.mainContainer {
+.players-container {
   display: flex;
   flex-flow: row nowrap;
   justify-content: flex-start;
@@ -92,9 +92,30 @@ body {
   font-weight: bold;
 }
 
-.hld-table {
+.round-container {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-content: flex-start;
+  width: 20em;
+  padding: 0.2em 0.2em;
+  margin: 0.5em 0.5em;
+  border: solid #397d2f;
+  border-width: 2px;
+  border-radius: 0.5em;
+  font-size: 0.6em;
+  font-weight: bold;
+}
+
+.players-table {
   border-collapse: separate;
   border-spacing: 0em 0em;
+  background: rgba(57, 125, 47, 0.7);
+  width: 100%;
+}
+
+.round-divs {
   background: rgba(57, 125, 47, 0.7);
   width: 100%;
 }
@@ -117,8 +138,17 @@ body {
   font-size: 0.8em;
   font-weight: bold;
   width: 25% !important;
-  padding: 0.4em;
-  margin-left: 0.1em;
+  padding: 0.2em;
+  margin-left: 0.5em;
+  background-color: #397d2f;
+}
+
+.newGameButton{
+  font-size: 0.85em;
+  font-weight: bold;
+  width: auto;
+  padding: 0.2em;
+  margin-left: 0.4em;
   background-color: #397d2f;
 }
 

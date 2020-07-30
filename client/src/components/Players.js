@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getGame, getPlayers } from '../redux/selectors';
-
 import Container from 'react-bootstrap/Container';
+
+import { getGame, getPlayers } from '../redux/selectors';
 
 const Players = props => {
   const { players } = props;
@@ -10,8 +10,8 @@ const Players = props => {
 
   return (
     <>
-      <Container fluid={false} className='mainContainer'>
-          <table className='hld-table'>
+      <Container fluid={false} className='players-container'>
+          <table className='players-table'>
             <tbody>
               <tr>
                 <th>Player</th>

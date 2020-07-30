@@ -1,8 +1,15 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { connect } from 'react-redux';
 import { WebSocketContext } from '../connection/webSocket';
-import { Button } from 'react-bootstrap';
+import Container from 'react-bootstrap/Container';
 import _ from 'lodash';
+
+import {
+  nextRound,
+  collectRoundFees,
+  payRoundWinnings
+} from '../redux/actions';
+
 import {
   getRoom,
   getPlayers,
@@ -13,13 +20,10 @@ import {
   getRoundLowWinnings,
   getRoundHighWinnings
 } from '../redux/selectors';
-import {
-  nextRound,
-  collectRoundFees,
-  payRoundWinnings
-} from '../redux/actions';
+
 import Dice from './Dice';
 import SummaryModal from './SummaryModal';
+import { HLDButton } from './Buttons';
 
 const Round = props => {
   const [showSummary, setShowSummary] = useState(false);
@@ -59,26 +63,32 @@ const Round = props => {
   };
 
   return (
-    <div className='flex-container'>
+    <>
+      {gameOn && (
+        <>
+          <Container fluid={false} className='round-container'>
+            <div className='round-divs'>
+              <div>Round: {round}</div>
+              <div>
+                {'Player in turn: '}
+                {gameOn && turn <= players.length ? playerInTurn.name : ''}
+              </div>
+              <div>Rolls: {rolls}</div>
+            </div>
+          </Container>
+          <Dice showRoundModal={showSummary} />
+        </>
+      )}
       <div>
         {!gameOn && (
-          <Button
-            variant='primary'
+          <HLDButton
+            title='New Game'
+            className='newGameButton'
             disabled={players.length < 3 || round > 6}
-            style={{ marginTop: '5px' }}
-            onClick={handleNewGame}
-          >
-            New Game
-          </Button>
+            handleClick={handleNewGame}
+          />
         )}
       </div>
-      <div>Round: {round}</div>
-      <div>
-        {'Player in turn: '}
-        {gameOn && turn <= players.length ? playerInTurn.name : ''}
-      </div>
-      <div>Rolls: {rolls}</div>
-      <Dice showRoundModal={showSummary} />
       <SummaryModal
         show={showSummary}
         handleClose={handleStartNextRound}
@@ -118,7 +128,7 @@ const Round = props => {
           </tbody>
         </table>
       </SummaryModal>
-    </div>
+    </>
   );
 };
 
