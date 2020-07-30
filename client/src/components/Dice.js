@@ -1,10 +1,15 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { connect } from 'react-redux';
 import { WebSocketContext } from '../connection/webSocket';
-import { Button } from 'react-bootstrap';
+import Container from 'react-bootstrap/Container';
 import _ from 'lodash';
 
-import { nextPlayer, waitingPlayers, updateRoundLow, updateRoundHigh } from '../redux/actions';
+import {
+  nextPlayer,
+  waitingPlayers,
+  updateRoundLow,
+  updateRoundHigh
+} from '../redux/actions';
 import {
   getRoom,
   getGame,
@@ -13,10 +18,20 @@ import {
   getDice
 } from '../redux/selectors';
 
+import { HLDButton } from './Buttons';
 import SummaryModal from './SummaryModal';
 
 const Dice = props => {
   const [showSummary, setShowSummary] = useState(false);
+
+  const dice1 = require('../dice-1.png');
+  const dice2 = require('../dice-2.png');
+  const dice3 = require('../dice-3.png');
+  const dice4 = require('../dice-4.png');
+  const dice5 = require('../dice-5.png');
+  const dice6 = require('../dice-6.png');
+
+  const dicePngs = ['dice-png-array', dice1, dice2, dice3, dice4, dice5, dice6];
 
   const {
     nextPlayer,
@@ -73,45 +88,49 @@ const Dice = props => {
   };
 
   return (
-    <div>
-      <div>
-        <table>
+    <>
+      <Container className='dice-container'>
+        <table className='dice-table'>
           <tbody>
             <tr>
-              <th>Dice1</th>
-              <th>Dice2</th>
-              <th>Dice3</th>
-              <th>Dice4</th>
-              <th>Dice5</th>
-              <th>Dice6</th>
-            </tr>
-            <tr>
               {dice.map((die, index) => {
-                return <td key={index}>{die.ready ? die.value : '_'}</td>;
+                return (
+                  <td className='dice-td' key={index}>
+                    {die.ready ? (
+                      <img className='dice' src={dicePngs[die.value]} />
+                    ) : (
+                      '_'
+                    )}
+                  </td>
+                );
               })}
             </tr>
             <tr>
               {dice.map((die, index) => {
                 return (
-                  <td key={index}>{!die.ready ? die.value || '_' : '_'}</td>
+                  <td className='dice-td' key={index}>
+                    {!die.ready
+                      ? <img className='dice' src={dicePngs[die.value]} /> ||
+                        '_'
+                      : '_'}
+                  </td>
                 );
               })}
             </tr>
           </tbody>
         </table>
-        <Button
-          variant='primary'
+        <HLDButton
+          title='Roll Dice'
+          className='rollDiceButton'
           disabled={
             !gameOn ||
             playerInTurn.name !== username ||
             round > 6 ||
             showSummary
           }
-          onClick={rollDice}
-        >
-          Roll Dice
-        </Button>
-      </div>
+          handleClick={rollDice}
+        />
+      </Container>
       <SummaryModal
         show={showSummary}
         handleClose={handleTurnEnd}
@@ -128,7 +147,7 @@ const Dice = props => {
       >
         {waiting.map(value => `${_.find(players, { id: value }).name}, `)}
       </SummaryModal>
-    </div>
+    </>
   );
 };
 
