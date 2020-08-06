@@ -15,7 +15,7 @@ const TopBar = props => {
   const [showId, setShowId] = useState(false);
   const [showAbout, setShowAbout] = useState(false);
   const { roomId, roomName, username } = props.room;
-  const title = 'Wellcome to High-Low-Dice';
+  const title = 'Welcome to High-Low-Dice';
 
   const closeRoomId = () => {
     setShowId(false);
@@ -82,7 +82,7 @@ const TopBar = props => {
           handleClose={closeAbout}
         >
           <span>
-            Game has six rounds titled from '1' to '6'. On ever round players try to throw the round
+            Game has six rounds titled from '1' to '6'. On every round players try to throw the round
             title with all five dice. Dice which land the correct face up are
             not rolled again.
             <br/>

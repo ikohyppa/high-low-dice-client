@@ -134,18 +134,19 @@ const Dice = props => {
       <SummaryModal
         show={showSummary}
         handleClose={handleTurnEnd}
-        title={`Round ${round}`}
         buttonText={'Next Player'}
       >
-        <p>Player: {playerInTurn.name}</p>
-        <p>Rolls: {rolls}</p>
+        <p className='summary-divs-title'>Turn summary</p>
+        <p className='summary-divs'>Round: {round}</p>
+        <p className='summary-divs'>Player: {playerInTurn.name}</p>
+        <p className='summary-divs'>Rolls: {rolls}</p>
       </SummaryModal>
       <SummaryModal
         show={!showSummary && waiting.length !== 0}
-        title={`Waiting for ....`}
         showButton={false}
       >
-        {waiting.map(value => `${_.find(players, { id: value }).name}, `)}
+        <p className='summary-divs'>Waiting for ....</p>
+        <p className='summary-divs'>{waiting.map(value => `${_.find(players, { id: value }).name}, `)}</p>
       </SummaryModal>
     </>
   );

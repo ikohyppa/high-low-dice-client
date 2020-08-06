@@ -92,16 +92,17 @@ const Round = props => {
       <SummaryModal
         show={showSummary}
         handleClose={handleStartNextRound}
-        title={`Round ${round} summary`}
         buttonText={'Next Round'}
       >
-        <table>
+        <p className='summary-divs-title'>Round {round} summary</p>
+        <table className='summary-table'>
           <tbody>
             {players.map(player => {
               return (
                 <tr key={`player-${player.id}`}>
-                  <td>{player.name}</td>
-                  <td>{player.rolls[round - 1]}</td>
+                  <td className='summary-table-td-first'>{player.name}</td>
+                  <td className='summary-table-td'>{player.rolls[round - 1]}</td>
+                  <td className='summary-table-td'>rolls</td>
                 </tr>
               );
             })}
@@ -115,13 +116,16 @@ const Round = props => {
         buttonText={'New Game'}
         showButton={_.isEmpty(waiting)}
       >
-        <table>
+        <p className='summary-divs-title'>Game summary</p>
+        <table className='summary-table'>
           <tbody>
             {players.map(player => {
               return (
                 <tr key={`player-${player.id}`}>
-                  <td>{player.name}</td>
-                  <td>{player.score}</td>
+                  <td className='summary-table-td-first'>{player.name}</td>
+                  <td className='summary-table-td'>scored</td>
+                  <td className='summary-table-td'>{player.score}</td>
+                  <td className='summary-table-td'>points</td>
                 </tr>
               );
             })}

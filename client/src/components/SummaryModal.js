@@ -1,30 +1,28 @@
 import React from 'react';
-import { Button, Modal } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 import '../App.css';
 
+import { HLDButton } from './Buttons';
+
 const SummaryModal = props => {
-  const {
-    show,
-    handleClose,
-    title,
-    showButton = true,
-    buttonText = ''
-  } = props;
+  const { show, handleClose, showButton = true, buttonText = '' } = props;
   return (
-    <Modal show={show} className='modal'>
-      <Modal.Header>
-        <Modal.Title>{title}</Modal.Title>
-      </Modal.Header>
-
-      <Modal.Body>{props.children}</Modal.Body>
-
-      <Modal.Footer>
+    <Modal
+      show={show}
+      dialogClassName='infoModal'
+      aria-labelledby='contained-modal-title-vcenter'
+      size='sm'
+    >
+      <Modal.Body className='modal-body'>
+        {props.children}
         {showButton && (
-          <Button variant='primary' onClick={handleClose}>
-            {buttonText}
-          </Button>
+          <HLDButton
+            title={buttonText}
+            className='modalButton float-right'
+            handleClick={handleClose}
+          />
         )}
-      </Modal.Footer>
+      </Modal.Body>
     </Modal>
   );
 };
