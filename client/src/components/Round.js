@@ -26,6 +26,7 @@ import SummaryModal from './SummaryModal';
 import { HLDButton } from './Buttons';
 
 const Round = props => {
+  const [isHost, setIsHost] = useState(false);
   const [showSummary, setShowSummary] = useState(false);
   const {
     nextRound,
@@ -38,7 +39,7 @@ const Round = props => {
     roundLowWinnings,
     roundHighWinnings
   } = props;
-  const { roomId } = props.room;
+  const { roomId, username } = props.room;
   const { gameOn, round, turn, rolls, waiting } = props.game;
 
   const ws = useContext(WebSocketContext);
@@ -47,7 +48,10 @@ const Round = props => {
     if (gameOn && turn > players.length) {
       setShowSummary(true);
     }
-  }, [turn]);
+    if (players.length > 0) {
+      setIsHost(username === players[0].name);
+    }
+  }, [players, turn]);
 
   const handleNewGame = () => {
     ws.startNewGame(roomId);
@@ -80,7 +84,7 @@ const Round = props => {
         </>
       )}
       <div>
-        {!gameOn && (
+        {!gameOn && isHost && (
           <HLDButton
             title='New Game'
             className='newGameButton'
@@ -101,7 +105,9 @@ const Round = props => {
               return (
                 <tr key={`player-${player.id}`}>
                   <td className='summary-table-td-first'>{player.name}</td>
-                  <td className='summary-table-td'>{player.rolls[round - 1]}</td>
+                  <td className='summary-table-td'>
+                    {player.rolls[round - 1]}
+                  </td>
                   <td className='summary-table-td'>rolls</td>
                 </tr>
               );
