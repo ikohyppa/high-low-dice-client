@@ -39,7 +39,7 @@ const Round = props => {
     roundLowWinnings,
     roundHighWinnings
   } = props;
-  const { roomId, username } = props.room;
+  const { roomId, roomName, username } = props.room;
   const { gameOn, round, turn, rolls, waiting } = props.game;
 
   const ws = useContext(WebSocketContext);
@@ -61,7 +61,7 @@ const Round = props => {
     setShowSummary(false);
     payRoundWinnings(roundLow, roundHigh, roundLowWinnings, roundHighWinnings);
     if (round < 6) {
-      collectRoundFees(roomId);
+      collectRoundFees(roomName);
     }
     nextRound();
   };
