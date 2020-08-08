@@ -24,7 +24,7 @@ export const IconWithTooltip = props => {
       <OverlayTrigger
         placement={placement}
         overlay={
-          <Tooltip className={'tooltip'}>
+          <Tooltip className={tooltip}>
             <span>{tooltip}</span>
           </Tooltip>
         }

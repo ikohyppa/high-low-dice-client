@@ -71,7 +71,7 @@ const Round = props => {
       {gameOn && (
         <>
           <Container fluid={false} className='round-container'>
-            <div className='round-divs'>
+            <div>
               <div>Round: {round}</div>
               <div>
                 {'Player in turn: '}
@@ -87,7 +87,7 @@ const Round = props => {
         {!gameOn && isHost && (
           <HLDButton
             title='New Game'
-            className='newGameButton'
+            className='new-game-button'
             disabled={players.length < 3 || round > 6}
             handleClick={handleNewGame}
           />

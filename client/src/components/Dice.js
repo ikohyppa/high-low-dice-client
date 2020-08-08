@@ -97,7 +97,7 @@ const Dice = props => {
                 return (
                   <td className='dice-td' key={index}>
                     {die.ready ? (
-                      <img className='dice' src={dicePngs[die.value]} />
+                      <img className='dice-pic' src={dicePngs[die.value]} />
                     ) : (
                       '_'
                     )}
@@ -110,7 +110,7 @@ const Dice = props => {
                 return (
                   <td className='dice-td' key={index}>
                     {!die.ready
-                      ? <img className='dice' src={dicePngs[die.value]} /> ||
+                      ? <img className='dice-pic' src={dicePngs[die.value]} /> ||
                         '_'
                       : '_'}
                   </td>
@@ -121,7 +121,7 @@ const Dice = props => {
         </table>
         <HLDButton
           title='Roll Dice'
-          className='rollDiceButton'
+          className='roll-dice-Button'
           disabled={
             !gameOn ||
             playerInTurn.name !== username ||

@@ -15,7 +15,7 @@ const InfoModal = props => {
       <Modal.Header closeButton>
         <Modal.Title as='h6' id='contained-modal-title-vcenter'>{title}</Modal.Title>
       </Modal.Header>
-      <Modal.Body>{props.children}</Modal.Body>
+      <Modal.Body className='modal-body'>{props.children}</Modal.Body>
     </Modal>
   );
 };

@@ -18,7 +18,7 @@ const SummaryModal = props => {
         {showButton && (
           <HLDButton
             title={buttonText}
-            className='modalButton float-right'
+            className='modal-button float-right'
             handleClick={handleClose}
           />
         )}

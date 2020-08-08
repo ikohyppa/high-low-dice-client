@@ -58,7 +58,7 @@ const Login = () => {
               />
               <HLDButton
                 title='Create'
-                className='loginButton'
+                className='login-button'
                 disabled={!username || !roomName}
                 handleClick={() => createGameRoom(roomName, username)}
               />
@@ -85,7 +85,7 @@ const Login = () => {
               />
               <HLDButton
                 title='Join'
-                className='loginButton'
+                className='login-button'
                 disabled={!username || !roomId}
                 handleClick={() => joinGameRoom(roomId, username)}
               />
